@@ -32,5 +32,13 @@ public class objectsPanel extends JPanel {
         g.drawRect(1,1,getWidth()-2,getHeight()-2);
         g.drawString(getWidth()+","+getHeight(),16,16);
         g.drawString(w+","+h,16,32);
+
+        Graphics2D g2d = (Graphics2D) g.create();
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
+        g2d.setColor(getBackground());
+        g2d.fillRect( 0, 0, getWidth(), getHeight() );
+        g2d.dispose();
+
+        g.drawString(getWidth()+","+getHeight(),16,16);
     }
 }
