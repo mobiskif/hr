@@ -15,14 +15,14 @@ public class Athom extends Component implements Runnable, MouseMotionListener {
         super();
         setLocation(x, y);
         try {
-            InputStream is = getClass().getClassLoader().getResourceAsStream("res/puzyr.png");
+            InputStream is = getClass().getClassLoader().getResourceAsStream("res/athom.png");
             image = ImageIO.read(is);
             int diameter = 60;
             image = image.getScaledInstance(diameter, diameter, Image.SCALE_SMOOTH);
             setPreferredSize(new Dimension(diameter, diameter));
             setSize(diameter, diameter);
 
-            is = getClass().getClassLoader().getResourceAsStream("res/athom.png");
+            is = getClass().getClassLoader().getResourceAsStream("res/puzyr.png");
             image2 = ImageIO.read(is);
             diameter = 15;
             image2 = image2.getScaledInstance(diameter, diameter, Image.SCALE_SMOOTH);
@@ -54,8 +54,9 @@ public class Athom extends Component implements Runnable, MouseMotionListener {
         super.paint(g);
         g.drawImage(image, 0, 0, this);
         g.drawString("" + getX() + "," + getY(),  8, getHeight() / 2+6);
-        g.drawImage(image2, getWidth()-20, getHeight()-20, this);
-        g.drawImage(image2, getWidth()-20, getHeight()-37, this);
+        g.drawImage(image2, getWidth()-20, getHeight()-15, this);
+        g.drawImage(image2, getWidth()-20, getHeight()-32, this);
+        g.drawImage(image2, getWidth()-20, getHeight()-49, this);
 
     }
 
