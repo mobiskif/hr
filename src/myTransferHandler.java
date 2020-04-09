@@ -1,10 +1,7 @@
-import javax.print.DocFlavor;
 import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
-
-import static com.sun.javafx.tk.Toolkit.getToolkit;
 
 public class myTransferHandler extends TransferHandler {
     @Override

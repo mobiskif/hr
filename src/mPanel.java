@@ -1,11 +1,6 @@
-import javafx.scene.input.MouseDragEvent;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,7 +8,7 @@ import java.awt.event.MouseMotionListener;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class mPanel extends JPanel implements MouseMotionListener, DropTargetListener, DragSourceMotionListener {
+public class mPanel extends JPanel implements MouseMotionListener {
     Image image, image2;
     Athom dragAthom;
     int x0,y0;
@@ -29,13 +24,12 @@ public class mPanel extends JPanel implements MouseMotionListener, DropTargetLis
         add(new Athom(10,20));
         add(new Athom(50,75));
 
-        setDragEnabled(true);
+        //setDragEnabled(true);
         //setDropMode(DropMode.INSERT);
-        setTransferHandler(new myTransferHandler());
-        addMouseListener(new DragMouseAdapter());
-
-        new DropTarget(this,this);
-        new DragSource();
+        //setTransferHandler(new TransferHandler());
+        //addMouseListener(new DragMouseAdapter());
+        //new DropTarget(this,this);
+        //new DragSource();
     }
 
     @Override
@@ -85,40 +79,6 @@ public class mPanel extends JPanel implements MouseMotionListener, DropTargetLis
     public void mouseMoved(MouseEvent e) {
         x0 = e.getX();
         y0 = e.getY();
-    }
-
-    @Override
-    public void dragEnter(DropTargetDragEvent dtde) {
-        System.out.println(dtde);
-
-    }
-
-    @Override
-    public void dragOver(DropTargetDragEvent dtde) {
-        System.out.println(dtde);
-
-    }
-
-    @Override
-    public void dropActionChanged(DropTargetDragEvent dtde) {
-        System.out.println(dtde);
-
-    }
-
-    @Override
-    public void dragExit(DropTargetEvent dte) {
-        System.out.println(dte);
-    }
-
-    @Override
-    public void drop(DropTargetDropEvent dtde) {
-        System.out.println(dtde);
-
-    }
-
-    @Override
-    public void dragMouseMoved(DragSourceDragEvent dsde) {
-        System.out.println("************");
     }
 
     protected class DragMouseAdapter extends MouseAdapter {

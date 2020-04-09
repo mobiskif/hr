@@ -16,7 +16,7 @@ public class mComponent extends JComponent implements MouseMotionListener {
         loadImages("res/athom.png");
         setLocation(x, y);
         addMouseMotionListener(this);
-        setTransferHandler(new myTransferHandler());
+        setTransferHandler(new mTransferHandler());
         addMouseListener(new DragMouseAdapter());
 
     }
@@ -73,7 +73,7 @@ public class mComponent extends JComponent implements MouseMotionListener {
                 JComponent c = (JComponent) e.getSource();
                 TransferHandler handler = c.getTransferHandler();
                 if (handler != null) handler.exportAsDrag(c, e, TransferHandler.COPY);
-                else System.out.println("null handler");
+                else System.out.println("null handler "+getDropTarget());
             }
             else super.mousePressed(e);
         }
