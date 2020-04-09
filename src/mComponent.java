@@ -16,9 +16,8 @@ public class mComponent extends JComponent implements MouseMotionListener {
         loadImages("res/athom.png");
         setLocation(x, y);
         addMouseMotionListener(this);
-        setTransferHandler(new mTransferHandler());
+        setTransferHandler(new mTransferHandler(this));
         addMouseListener(new DragMouseAdapter());
-
     }
 
     void loadImages(String bgrName) {

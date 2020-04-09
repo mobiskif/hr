@@ -24,12 +24,8 @@ public class mPanel extends JPanel implements MouseMotionListener {
         add(new Athom(10,20));
         add(new Athom(50,75));
 
-        //setDragEnabled(true);
-        //setDropMode(DropMode.INSERT);
-        //setTransferHandler(new TransferHandler());
-        //addMouseListener(new DragMouseAdapter());
-        //new DropTarget(this,this);
-        //new DragSource();
+        setTransferHandler(new mTransferHandler(this));
+        addMouseListener(new DragMouseAdapter());
     }
 
     @Override
@@ -87,10 +83,11 @@ public class mPanel extends JPanel implements MouseMotionListener {
                 JComponent c = (JComponent) e.getSource();
                 TransferHandler handler = c.getTransferHandler();
                 if (handler != null) handler.exportAsDrag(c, e, TransferHandler.COPY);
-                else System.out.println("null handler");
-                super.mousePressed(e);
+                else System.out.println("null handler "+getDropTarget());
             }
+            else super.mousePressed(e);
         }
+
         @Override
         public void mouseEntered(MouseEvent e) {
             //System.out.println("======== "+e);
