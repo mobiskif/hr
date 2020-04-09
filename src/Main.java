@@ -13,7 +13,7 @@ public class Main extends Applet {
     public static void main(String[] args) {
         JFrame f = new JFrame("ВДНХ");
         f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        f.setPreferredSize(new Dimension(360,420));
+        f.setPreferredSize(new Dimension(365,420));
         f.add(new MainForm().$$$getRootComponent$$$());
         f.pack();
         f.setVisible(true);

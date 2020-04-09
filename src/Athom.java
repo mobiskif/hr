@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class Athom extends Component implements Runnable, MouseMotionListener {
-    private Image image;
+    private Image image, image2;
     private boolean isStarted=false;
     int x0,y0;
 
@@ -15,12 +15,18 @@ public class Athom extends Component implements Runnable, MouseMotionListener {
         super();
         setLocation(x, y);
         try {
-            InputStream is = getClass().getClassLoader().getResourceAsStream("res/athom.png");
+            InputStream is = getClass().getClassLoader().getResourceAsStream("res/puzyr.png");
             image = ImageIO.read(is);
-            int diameter = 50;
+            int diameter = 60;
             image = image.getScaledInstance(diameter, diameter, Image.SCALE_SMOOTH);
             setPreferredSize(new Dimension(diameter, diameter));
             setSize(diameter, diameter);
+
+            is = getClass().getClassLoader().getResourceAsStream("res/athom.png");
+            image2 = ImageIO.read(is);
+            diameter = 15;
+            image2 = image2.getScaledInstance(diameter, diameter, Image.SCALE_SMOOTH);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,6 +54,9 @@ public class Athom extends Component implements Runnable, MouseMotionListener {
         super.paint(g);
         g.drawImage(image, 0, 0, this);
         g.drawString("" + getX() + "," + getY(),  8, getHeight() / 2+6);
+        g.drawImage(image2, getWidth()-20, getHeight()-20, this);
+        g.drawImage(image2, getWidth()-20, getHeight()-37, this);
+
     }
 
     @Override
