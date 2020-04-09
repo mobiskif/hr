@@ -67,9 +67,8 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="38246" class="objectsPanel" binding="objectsPanel">
+              <component id="38246" class="VDNH" binding="objectsPanel">
                 <constraints border-constraint="Center"/>
-                <properties/>
               </component>
             </children>
           </grid>
