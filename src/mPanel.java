@@ -5,10 +5,9 @@ import java.awt.dnd.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
-public class mPanel extends JPanel implements MouseMotionListener {
+public class mPanel extends JPanel implements MouseMotionListener, Serializable {
     Image image, image2;
     int x0, y0;
 

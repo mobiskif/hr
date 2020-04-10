@@ -3,9 +3,9 @@ import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
+import java.io.*;
 
-public class mTransferHandler extends TransferHandler {
+public class mTransferHandler extends TransferHandler implements Serializable {
     JComponent parent;
 
     public mTransferHandler(JComponent parent) {
@@ -37,7 +37,7 @@ public class mTransferHandler extends TransferHandler {
             @Override
             public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
                 //return null;
-                return tc.toString();
+                return tc;
             }
         };
         return t;
@@ -46,15 +46,21 @@ public class mTransferHandler extends TransferHandler {
     @Override
     protected void exportDone(JComponent source, Transferable data, int action) {
         //super.exportDone(source, data, action);
-        System.out.println("export source: "+source);
+        System.out.println("export source: " + source);
         try {
-            System.out.println("export data: "+data.getTransferData(DataFlavor.stringFlavor));
+            //System.out.println("export data: " + data.getTransferData(DataFlavor.stringFlavor));
+            FileOutputStream fos = null;
+            fos = new FileOutputStream("temp.out");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(data);
+            oos.flush();
+            oos.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         if (action == TransferHandler.MOVE) {
-            System.out.println("MOVE");
+            //System.out.println("MOVE");
             Container parent = source.getParent();
             parent.remove(source);
             parent.repaint();
@@ -66,8 +72,14 @@ public class mTransferHandler extends TransferHandler {
         //return super.importData(comp, t);
         Point point = support.getDropLocation().getDropPoint();
         //System.out.println("import location: " + support.getDropLocation());
+        //try {
         try {
-            System.out.println("import data: "+support.getTransferable().getTransferData(DataFlavor.stringFlavor));
+            System.out.println("import data: " + support.getTransferable().getTransferData(DataFlavor.stringFlavor));
+
+            FileInputStream fis = new FileInputStream("temp.out");
+            ObjectInputStream oin = new ObjectInputStream(fis);
+            Athom ts =  (Athom) oin.readObject();
+            System.out.println("version=" + ts);
         } catch (Exception e) {
             e.printStackTrace();
         }

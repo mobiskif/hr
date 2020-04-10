@@ -3,12 +3,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
-public class mComponent extends JComponent implements MouseMotionListener {
-    Image image, image2;
+public class mComponent extends JComponent implements MouseMotionListener, Serializable, MouseListener {
+    transient Image image, image2;
     int x0, y0;
 
     public mComponent(int x, int y, String bgrName) {
@@ -16,8 +16,8 @@ public class mComponent extends JComponent implements MouseMotionListener {
         loadImages(bgrName);
         setLocation(x, y);
         addMouseMotionListener(this);
+        addMouseListener(this);
         setTransferHandler(new mTransferHandler(this));
-        addMouseListener(new DragMouseAdapter());
     }
 
     void loadImages(String bgrName) {
@@ -69,17 +69,91 @@ public class mComponent extends JComponent implements MouseMotionListener {
         y0 = e.getY();
     }
 
-    private class DragMouseAdapter extends MouseAdapter {
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if (e.getModifiers() == 18 || e.getModifiers() == 17) {
+            JComponent c = (JComponent) e.getSource();
+            c.getTransferHandler().exportAsDrag(c, e, TransferHandler.COPY);
+            //transient TransferHandler handler = c.getTransferHandler();
+            //if (handler != null) handler.exportAsDrag(c, e, TransferHandler.COPY);
+            //else System.out.println("null handler " + getDropTarget());
+/*
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream("temp.out");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(this);
+                oos.flush();
+                oos.close();
+            } catch (Exception ee) {
+                ee.printStackTrace();
+            }
+
+            try {
+                FileInputStream fis = new FileInputStream("temp.out");
+                ObjectInputStream oin = new ObjectInputStream(fis);
+                Athom ts = (Athom) oin.readObject();
+                System.out.println("version=" + ts.x0);
+            } catch (Exception ee) {
+                ee.printStackTrace();
+            }
+*/
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+
+    }
+
+    /*
+    private class DragMouseAdapter extends MouseAdapter implements Serializable {
         public void mousePressed(MouseEvent e) {
             if (e.getModifiers() == 18 || e.getModifiers() == 17) {
                 JComponent c = (JComponent) e.getSource();
                 TransferHandler handler = c.getTransferHandler();
                 if (handler != null) handler.exportAsDrag(c, e, TransferHandler.COPY);
                 else System.out.println("null handler " + getDropTarget());
+//------
+                FileOutputStream fos = null;
+                try {
+                    fos = new FileOutputStream("temp.out");
+                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+                    oos.writeObject(this);
+                    oos.flush();
+                    oos.close();
+                } catch (Exception ee) {
+                    ee.printStackTrace();
+                }
+
+                try {
+                    FileInputStream fis = new FileInputStream("temp.out");
+                    ObjectInputStream oin = new ObjectInputStream(fis);
+                    mPanel ts = (mPanel) oin.readObject();
+                    System.out.println("version=" + ts.image);
+                } catch (Exception ee) {
+                    ee.printStackTrace();
+                }
+//------
             } else super.mousePressed(e);
         }
 
-
     }
+*/
 
 }
