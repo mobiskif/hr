@@ -9,11 +9,11 @@ import java.io.InputStream;
 
 public class mComponent extends JComponent implements MouseMotionListener {
     Image image, image2;
-    int x0,y0;
+    int x0, y0;
 
     public mComponent(int x, int y, String bgrName) {
         super();
-        loadImages("res/athom.png");
+        loadImages(bgrName);
         setLocation(x, y);
         addMouseMotionListener(this);
         setTransferHandler(new mTransferHandler(this));
@@ -34,26 +34,29 @@ public class mComponent extends JComponent implements MouseMotionListener {
             diameter = 15;
             image2 = image2.getScaledInstance(diameter, diameter, Image.SCALE_SMOOTH);
 
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        catch (IOException e) { e.printStackTrace(); }
     }
-    
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         g.drawImage(image, 0, 0, this);
-        g.drawString("" + getX() + "," + getY(),  8, getHeight() / 2+6);
-        g.drawImage(image2, getWidth()-20, getHeight()-15, this);
-        g.drawImage(image2, getWidth()-20, getHeight()-32, this);
-        g.drawImage(image2, getWidth()-20, getHeight()-49, this);
+        g.drawString("" + getX() + "," + getY(), 8, getHeight() / 2 + 6);
+        g.drawImage(image2, getWidth() - 20, getHeight() - 15, this);
+        g.drawImage(image2, getWidth() - 20, getHeight() - 32, this);
+        g.drawImage(image2, getWidth() - 20, getHeight() - 49, this);
 
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        int x1,y1,dx,dy;
-        x1 = e.getX(); y1 = e.getY();
-        dx = x1 - x0; dy = y1 - y0;
+        int x1, y1, dx, dy;
+        x1 = e.getX();
+        y1 = e.getY();
+        dx = x1 - x0;
+        dy = y1 - y0;
         Component n = (Component) e.getSource();
         //n.setBounds(n.getX() + dx, n.getY() + dy, n.getWidth(), n.getHeight());
         n.setLocation(n.getX() + dx, n.getY() + dy);
@@ -68,13 +71,12 @@ public class mComponent extends JComponent implements MouseMotionListener {
 
     private class DragMouseAdapter extends MouseAdapter {
         public void mousePressed(MouseEvent e) {
-            if (e.getModifiers()==18 || e.getModifiers()==17) {
+            if (e.getModifiers() == 18 || e.getModifiers() == 17) {
                 JComponent c = (JComponent) e.getSource();
                 TransferHandler handler = c.getTransferHandler();
                 if (handler != null) handler.exportAsDrag(c, e, TransferHandler.COPY);
-                else System.out.println("null handler "+getDropTarget());
-            }
-            else super.mousePressed(e);
+                else System.out.println("null handler " + getDropTarget());
+            } else super.mousePressed(e);
         }
 
 
