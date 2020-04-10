@@ -32,13 +32,17 @@ public class mTransferHandler extends TransferHandler implements Serializable {
             }
 
             @Override
-            public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-                FileOutputStream fos = null;
-                fos = new FileOutputStream("temp.out");
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(c);
-                oos.flush();
-                oos.close();
+            public JComponent getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+                try {
+                    FileOutputStream fos = null;
+                    fos = new FileOutputStream("temp.out");
+                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+                    oos.writeObject(c);
+                    oos.flush();
+                    oos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 return c;
             }
         };
@@ -58,13 +62,10 @@ public class mTransferHandler extends TransferHandler implements Serializable {
     public boolean importData(TransferHandler.TransferSupport support) {
         Point point = support.getDropLocation().getDropPoint();
         try {
-            //System.out.println("imported: " + support.getTransferable().getTransferData(DataFlavor.stringFlavor));
-            FileInputStream fis = new FileInputStream("temp.out");
-            ObjectInputStream oin = new ObjectInputStream(fis);
-            Athom ts =  (Athom) oin.readObject();
-            System.out.println("to Object: " + ts);
-            //component.add(new Athom(point.x, point.y));
-            component.add(ts);
+            Object data = support.getTransferable().getTransferData(DataFlavor.stringFlavor);
+            String str = data.toString();
+            if (str.contains("Athom")) component.add(new Athom(point.x, point.y));
+            else if (str.contains("mPanel")) component.add(new mPanel(point.x, point.y, "res/vd.jpg"));
             component.repaint();
             return true;
         } catch (Exception e) {

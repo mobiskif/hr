@@ -8,7 +8,8 @@ import java.awt.event.MouseMotionListener;
 import java.io.*;
 
 public class mPanel extends JPanel implements MouseMotionListener, Serializable {
-    Image image, image2;
+    protected String title;
+    transient Image image, image2;
     int x0, y0;
 
     public mPanel(int x, int y, String bgrName) {
@@ -18,8 +19,8 @@ public class mPanel extends JPanel implements MouseMotionListener, Serializable 
         setLocation(x, y);
         addMouseMotionListener(this);
 
-        add(new Athom(10, 20));
-        add(new Athom(50, 75));
+        //add(new Athom(10, 20));
+        //add(new Athom(50, 75));
 
         setTransferHandler(new mTransferHandler(this));
         addMouseListener(new DragMouseAdapter());
@@ -40,6 +41,11 @@ public class mPanel extends JPanel implements MouseMotionListener, Serializable 
             }
             setPreferredSize(new Dimension(w, h));
             setSize(w, h);
+
+            is = getClass().getClassLoader().getResourceAsStream("res/puzyr2.png");
+            image2 = ImageIO.read(is);
+            image2 = image2.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,8 +56,7 @@ public class mPanel extends JPanel implements MouseMotionListener, Serializable 
         super.paintComponent(g);
         g.drawImage(image, 0, 0, this);
         g.drawRect(1, 1, getWidth() - 2, getHeight() - 2);
-        g.drawString(getWidth() + "," + getHeight(), 16, 16);
-        g.drawString(getWidth() + "," + getHeight(), 16, 32);
+        //g.drawString(getWidth() + "," + getHeight(), 16, 32);
 
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
@@ -59,7 +64,15 @@ public class mPanel extends JPanel implements MouseMotionListener, Serializable 
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.dispose();
 
-        g.drawString(getWidth() + "," + getHeight(), 16, 16);
+        Font oldf = g.getFont();
+        g.setFont(new Font("Serif", Font.BOLD, 18));
+        g.drawString(getComponents().length+"", 16, 20);
+        g.drawString(""+title, 16, getHeight()-20);
+        g.setFont(oldf);
+
+        g.drawImage(image2, getWidth() - 20, 15, this);
+        g.drawImage(image2, getWidth() - 20, 32, this);
+        g.drawImage(image2, getWidth() - 20, 49, this);
     }
 
     @Override
