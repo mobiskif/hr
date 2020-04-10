@@ -47,7 +47,6 @@ public class mComponent extends JComponent implements MouseMotionListener, Seria
         g.drawImage(image2, getWidth() - 20, getHeight() - 15, this);
         g.drawImage(image2, getWidth() - 20, getHeight() - 32, this);
         g.drawImage(image2, getWidth() - 20, getHeight() - 49, this);
-
     }
 
     @Override
@@ -120,40 +119,5 @@ public class mComponent extends JComponent implements MouseMotionListener, Seria
     public void mouseExited(MouseEvent mouseEvent) {
 
     }
-
-    /*
-    private class DragMouseAdapter extends MouseAdapter implements Serializable {
-        public void mousePressed(MouseEvent e) {
-            if (e.getModifiers() == 18 || e.getModifiers() == 17) {
-                JComponent c = (JComponent) e.getSource();
-                TransferHandler handler = c.getTransferHandler();
-                if (handler != null) handler.exportAsDrag(c, e, TransferHandler.COPY);
-                else System.out.println("null handler " + getDropTarget());
-//------
-                FileOutputStream fos = null;
-                try {
-                    fos = new FileOutputStream("temp.out");
-                    ObjectOutputStream oos = new ObjectOutputStream(fos);
-                    oos.writeObject(this);
-                    oos.flush();
-                    oos.close();
-                } catch (Exception ee) {
-                    ee.printStackTrace();
-                }
-
-                try {
-                    FileInputStream fis = new FileInputStream("temp.out");
-                    ObjectInputStream oin = new ObjectInputStream(fis);
-                    mPanel ts = (mPanel) oin.readObject();
-                    System.out.println("version=" + ts.image);
-                } catch (Exception ee) {
-                    ee.printStackTrace();
-                }
-//------
-            } else super.mousePressed(e);
-        }
-
-    }
-*/
 
 }

@@ -6,23 +6,20 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.*;
 
 public class mTransferHandler extends TransferHandler implements Serializable {
-    JComponent parent;
+    JComponent component;
 
-    public mTransferHandler(JComponent parent) {
+    public mTransferHandler(JComponent c) {
         super();
-        this.parent = parent;
+        this.component = c;
     }
 
     @Override
     public int getSourceActions(JComponent c) {
-        //return super.getSourceActions(c);
         return TransferHandler.COPY_OR_MOVE;
     }
 
     @Override
     protected Transferable createTransferable(JComponent c) {
-        //return super.createTransferable(c);
-        JComponent tc = c;
         Transferable t = new Transferable() {
             @Override
             public DataFlavor[] getTransferDataFlavors() {
@@ -36,8 +33,13 @@ public class mTransferHandler extends TransferHandler implements Serializable {
 
             @Override
             public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-                //return null;
-                return tc;
+                FileOutputStream fos = null;
+                fos = new FileOutputStream("temp.out");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(c);
+                oos.flush();
+                oos.close();
+                return c;
             }
         };
         return t;
@@ -45,22 +47,7 @@ public class mTransferHandler extends TransferHandler implements Serializable {
 
     @Override
     protected void exportDone(JComponent source, Transferable data, int action) {
-        //super.exportDone(source, data, action);
-        System.out.println("export source: " + source);
-        try {
-            //System.out.println("export data: " + data.getTransferData(DataFlavor.stringFlavor));
-            FileOutputStream fos = null;
-            fos = new FileOutputStream("temp.out");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(data);
-            oos.flush();
-            oos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         if (action == TransferHandler.MOVE) {
-            //System.out.println("MOVE");
             Container parent = source.getParent();
             parent.remove(source);
             parent.repaint();
@@ -69,29 +56,25 @@ public class mTransferHandler extends TransferHandler implements Serializable {
 
     @Override
     public boolean importData(TransferHandler.TransferSupport support) {
-        //return super.importData(comp, t);
         Point point = support.getDropLocation().getDropPoint();
-        //System.out.println("import location: " + support.getDropLocation());
-        //try {
         try {
-            System.out.println("import data: " + support.getTransferable().getTransferData(DataFlavor.stringFlavor));
-
+            //System.out.println("imported: " + support.getTransferable().getTransferData(DataFlavor.stringFlavor));
             FileInputStream fis = new FileInputStream("temp.out");
             ObjectInputStream oin = new ObjectInputStream(fis);
             Athom ts =  (Athom) oin.readObject();
-            System.out.println("version=" + ts);
+            System.out.println("to Object: " + ts);
+            //component.add(new Athom(point.x, point.y));
+            component.add(ts);
+            component.repaint();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
-        parent.add(new Athom(point.x, point.y));
-        parent.repaint();
-        return true;
     }
 
     @Override
     public boolean canImport(TransferHandler.TransferSupport support) {
-        //return super.canImport(comp, transferFlavors);
-        //System.out.println("canImport: " + support.getSourceDropActions());
         return true;
     }
 
