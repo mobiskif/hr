@@ -74,10 +74,24 @@ public class mTransferHandler extends TransferHandler implements Serializable {
             Component[] comp = (Component[]) data.get("components");
             System.out.println(comp.length);
             if (comp!=null) for (Component c : comp) {
-                HashMap cnf = ((mComponent) c).conf;
-                mComponent nc = new mComponent(point.x, point.y, "res/vd.jpg");
-                nc.conf=cnf;
-                new_comp.add(nc);
+                System.out.println(c.getClass().getSimpleName());
+                mComponent mc = (mComponent) c;
+                HashMap cnf = mc.conf;
+                if (mc.getClass().getSimpleName().contains("Athom")) {
+                    Athom nc = new Athom(mc.getX(), mc.getY());
+                    nc.conf=cnf;
+                    new_comp.add(nc);
+                }
+                else if (mc.getClass().getSimpleName().contains("mComponent")) {
+                    mComponent nc = new mComponent(mc.getX(), mc.getY(), "res/vd.jpg");
+                    nc.conf=cnf;
+                    new_comp.add(nc);
+                }
+                else if (mc.getClass().getSimpleName().contains("VDNH")) {
+                    mComponent nc = new mComponent(mc.getX(), mc.getY(), "res/vdnh.jpg");
+                    nc.conf=cnf;
+                    new_comp.add(nc);
+                }
             }
 
             new_comp.conf = data;
