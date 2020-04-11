@@ -17,5 +17,7 @@ public class Main extends Applet {
         f.add(new MainForm().$$$getRootComponent$$$());
         f.pack();
         f.setVisible(true);
+
+
     }
 }
