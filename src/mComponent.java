@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class mComponent extends JPanel implements Serializable {
     transient Image image, image2;
-    Config config = new Config();
+    HashMap conf = new HashMap();
     int x0, y0;
 
     public mComponent(int x, int y, String bgrName) {
@@ -15,10 +15,11 @@ public class mComponent extends JPanel implements Serializable {
         setLayout(null);
         setLocation(x, y);
         loadImages(bgrName);
-        config.simpleName = getClass().getSimpleName();
-        config.hashtable.put("qwe","asd");
+        conf.put("simpleName", getClass().getSimpleName());
+        conf.put("showLed", true);
+        conf.put("transparent", false);
 
-        setTransferHandler(new mTransferHandler(this, config));
+        setTransferHandler(new mTransferHandler(this));
 
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
@@ -97,7 +98,7 @@ public class mComponent extends JPanel implements Serializable {
         g.drawImage(image, 0, 0, this);
         g.drawString("" + getX() + "," + getY(), 8, getHeight() / 2 + 6);
 
-        if (config.transparent) {
+        if ((boolean)conf.get("transparent")) {
             Graphics2D g2d = (Graphics2D) g.create();
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
             g2d.setColor(getBackground());
@@ -108,10 +109,10 @@ public class mComponent extends JPanel implements Serializable {
         Font oldf = g.getFont();
         g.setFont(new Font("Serif", Font.BOLD, 18));
         g.drawString(getComponents().length + "", 16, 20);
-        g.drawString("" + config.title, 16, getHeight() - 20);
+        g.drawString("" + conf.get("title"), 16, getHeight() - 20);
         g.setFont(oldf);
-        g.drawString("" + config.simpleName, 16, getHeight() - 38);
-        if (config.showled) {
+        g.drawString("" + conf.get("simpleName"), 16, getHeight() - 38);
+        if ((boolean)conf.get("showLed")) {
             g.drawImage(image2, getWidth() - 20, getHeight() - 15, this);
             g.drawImage(image2, getWidth() - 20, getHeight() - 32, this);
             g.drawImage(image2, getWidth() - 20, getHeight() - 49, this);
