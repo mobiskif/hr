@@ -15,6 +15,8 @@ public class mComponent extends JPanel implements Serializable {
         setLayout(null);
         setLocation(x, y);
         loadImages(bgrName);
+        setOpaque(false);
+
         conf.put("simpleName", getClass().getSimpleName());
         conf.put("showLed", true);
         conf.put("transparent", false);
@@ -55,8 +57,6 @@ public class mComponent extends JPanel implements Serializable {
             }
         });
 
-        //config.transparent=true;
-        setOpaque(false);
     }
 
     void loadImages(String bgrName) {

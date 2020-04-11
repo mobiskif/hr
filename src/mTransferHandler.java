@@ -7,11 +7,11 @@ import java.io.*;
 import java.util.HashMap;
 
 public class mTransferHandler extends TransferHandler implements Serializable {
-    mComponent component;
+    mComponent reciver;
 
     public mTransferHandler(mComponent comp) {
         super();
-        this.component = comp;
+        this.reciver = comp;
     }
 
     @Override
@@ -34,18 +34,18 @@ public class mTransferHandler extends TransferHandler implements Serializable {
 
             @Override
             public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-                component.conf.put("components", component.getComponents());
+                reciver.conf.put("components", reciver.getComponents());
                 try {
                     FileOutputStream fos = null;
                     fos = new FileOutputStream("temp.out");
                     ObjectOutputStream oos = new ObjectOutputStream(fos);
-                    oos.writeObject(component.conf);
+                    oos.writeObject(reciver.conf);
                     oos.flush();
                     oos.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                return component.conf;
+                return reciver.conf;
             }
         };
         return t;
@@ -62,41 +62,48 @@ public class mTransferHandler extends TransferHandler implements Serializable {
 
     @Override
     public boolean importData(TransferHandler.TransferSupport support) {
-        Point point = support.getDropLocation().getDropPoint();
+        Point point;
         try {
-            HashMap data = (HashMap) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
-
-            mComponent new_comp = null;
-            if (data.get("simpleName").toString().contains("Athom")) new_comp = new Athom(point.x, point.y);
-            else if (data.get("simpleName").toString().contains("mComponent")) new_comp = new mComponent(point.x, point.y, "res/vd.jpg");
-            else if (data.get("simpleName").toString().contains("VDNH")) new_comp = new mComponent(point.x, point.y, "res/vdnh.jpg");
-
-            Component[] comp = (Component[]) data.get("components");
-            System.out.println(comp.length);
-            if (comp!=null) for (Component c : comp) {
-                System.out.println(c.getClass().getSimpleName());
-                mComponent mc = (mComponent) c;
-                HashMap cnf = mc.conf;
-                if (mc.getClass().getSimpleName().contains("Athom")) {
-                    Athom nc = new Athom(mc.getX(), mc.getY());
-                    nc.conf=cnf;
-                    new_comp.add(nc);
-                }
-                else if (mc.getClass().getSimpleName().contains("mComponent")) {
-                    mComponent nc = new mComponent(mc.getX(), mc.getY(), "res/vd.jpg");
-                    nc.conf=cnf;
-                    new_comp.add(nc);
-                }
-                else if (mc.getClass().getSimpleName().contains("VDNH")) {
-                    mComponent nc = new mComponent(mc.getX(), mc.getY(), "res/vdnh.jpg");
-                    nc.conf=cnf;
-                    new_comp.add(nc);
-                }
+            mComponent migrant = null;
+            HashMap migrant_conf = (HashMap) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
+            point = support.getDropLocation().getDropPoint();
+            switch (migrant_conf.get("simpleName").toString()) {
+                case "Athom":
+                    migrant = new Athom(point.x, point.y);
+                    break;
+                case "mComponent":
+                    migrant = new mComponent(point.x, point.y, "res/vd.jpg");
+                    break;
+                case "VDNH":
+                    migrant = new mComponent(point.x, point.y, "res/vdnh.jpg");
+                    break;
             }
 
-            new_comp.conf = data;
-            component.add(new_comp);
-            component.repaint();
+            Component[] migrant_childs = (Component[]) migrant_conf.get("components");
+            if (migrant_childs != null) for (Component c : migrant_childs) {
+                mComponent child = (mComponent) c;
+                HashMap child_conf = child.conf;
+                point = child.getLocation();
+                switch (child.getClass().getSimpleName()) {
+                    case "Athom":
+                        child = new Athom(point.x, point.y);
+                        break;
+                    case "mComponent":
+                        child = new mComponent(point.x, point.y, "res/vd.jpg");
+                        break;
+                    case "VDNH":
+                        child = new mComponent(point.x, point.y, "res/vdnh.jpg");
+                        break;
+                }
+
+                child.conf = child_conf;
+                migrant.add(child);
+            }
+
+            migrant.conf = migrant_conf;
+            reciver.add(migrant);
+
+            reciver.repaint();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
