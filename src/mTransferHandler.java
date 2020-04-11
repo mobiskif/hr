@@ -7,10 +7,12 @@ import java.io.*;
 
 public class mTransferHandler extends TransferHandler implements Serializable {
     JComponent component;
+    Config config;
 
-    public mTransferHandler(JComponent c) {
+    public mTransferHandler(JComponent comp, Config conf) {
         super();
-        this.component = c;
+        this.config = conf;
+        this.component = comp;
     }
 
     @Override
@@ -32,18 +34,18 @@ public class mTransferHandler extends TransferHandler implements Serializable {
             }
 
             @Override
-            public JComponent getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+            public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
                 try {
                     FileOutputStream fos = null;
                     fos = new FileOutputStream("temp.out");
                     ObjectOutputStream oos = new ObjectOutputStream(fos);
-                    oos.writeObject(c);
+                    oos.writeObject(config);
                     oos.flush();
                     oos.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                return c;
+                return config;
             }
         };
         return t;
@@ -62,8 +64,12 @@ public class mTransferHandler extends TransferHandler implements Serializable {
     public boolean importData(TransferHandler.TransferSupport support) {
         Point point = support.getDropLocation().getDropPoint();
         try {
-            Object data = support.getTransferable().getTransferData(DataFlavor.stringFlavor);
-            String str = data.toString();
+            //Object data = support.getTransferable().getTransferData(DataFlavor.stringFlavor);
+            //String str = data.toString();
+
+            Config data = (Config) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
+            String str = data.simpleName;
+
             if (str.contains("Athom")) component.add(new Athom(point.x, point.y));
             else if (str.contains("mPanel")) component.add(new mPanel(point.x, point.y, "res/vd.jpg"));
             component.repaint();

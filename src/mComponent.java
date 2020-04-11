@@ -1,23 +1,54 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.io.*;
 
-public class mComponent extends JComponent implements MouseMotionListener, Serializable, MouseListener {
+public class mComponent extends JComponent implements Serializable {
     transient Image image, image2;
+    Config config = new Config();
     int x0, y0;
 
     public mComponent(int x, int y, String bgrName) {
         super();
-        loadImages(bgrName);
         setLocation(x, y);
-        addMouseMotionListener(this);
-        addMouseListener(this);
-        setTransferHandler(new mTransferHandler(this));
+        loadImages(bgrName);
+        config.simpleName = getClass().getSimpleName();
+        setTransferHandler(new mTransferHandler(this, config));
+
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                //super.mouseDragged(e);
+                int x1, y1, dx, dy;
+                x1 = e.getX();
+                y1 = e.getY();
+                dx = x1 - x0;
+                dy = y1 - y0;
+                Component n = (Component) e.getSource();
+                n.setLocation(n.getX() + dx, n.getY() + dy);
+                n.getParent().repaint();
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                //super.mouseMoved(e);
+                x0 = e.getX();
+                y0 = e.getY();
+            }
+        });
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //super.mousePressed(e);
+                if (e.getModifiers() == 18 || e.getModifiers() == 17) {
+                    JComponent c = (JComponent) e.getSource();
+                    TransferHandler handler = c.getTransferHandler();
+                    if (handler != null) handler.exportAsDrag(c, e, TransferHandler.COPY);
+                    else System.out.println("null handler " + getDropTarget());
+                } else super.mousePressed(e);
+            }
+        });
     }
 
     void loadImages(String bgrName) {
@@ -49,75 +80,5 @@ public class mComponent extends JComponent implements MouseMotionListener, Seria
         g.drawImage(image2, getWidth() - 20, getHeight() - 49, this);
     }
 
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        int x1, y1, dx, dy;
-        x1 = e.getX();
-        y1 = e.getY();
-        dx = x1 - x0;
-        dy = y1 - y0;
-        Component n = (Component) e.getSource();
-        //n.setBounds(n.getX() + dx, n.getY() + dy, n.getWidth(), n.getHeight());
-        n.setLocation(n.getX() + dx, n.getY() + dy);
-        n.getParent().repaint();
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        x0 = e.getX();
-        y0 = e.getY();
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        if (e.getModifiers() == 18 || e.getModifiers() == 17) {
-            JComponent c = (JComponent) e.getSource();
-            c.getTransferHandler().exportAsDrag(c, e, TransferHandler.COPY);
-            //transient TransferHandler handler = c.getTransferHandler();
-            //if (handler != null) handler.exportAsDrag(c, e, TransferHandler.COPY);
-            //else System.out.println("null handler " + getDropTarget());
-/*
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream("temp.out");
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(this);
-                oos.flush();
-                oos.close();
-            } catch (Exception ee) {
-                ee.printStackTrace();
-            }
-
-            try {
-                FileInputStream fis = new FileInputStream("temp.out");
-                ObjectInputStream oin = new ObjectInputStream(fis);
-                Athom ts = (Athom) oin.readObject();
-                System.out.println("version=" + ts.x0);
-            } catch (Exception ee) {
-                ee.printStackTrace();
-            }
-*/
-        }
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
 
 }
