@@ -64,14 +64,14 @@ public class mTransferHandler extends TransferHandler implements Serializable {
     public boolean importData(TransferHandler.TransferSupport support) {
         Point point = support.getDropLocation().getDropPoint();
         try {
-            //Object data = support.getTransferable().getTransferData(DataFlavor.stringFlavor);
-            //String str = data.toString();
-
             Config data = (Config) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
-            String str = data.simpleName;
 
-            if (str.contains("Athom")) component.add(new Athom(point.x, point.y));
-            else if (str.contains("mPanel")) component.add(new mPanel(point.x, point.y, "res/vd.jpg"));
+            mComponent new_comp = null;
+            if (data.simpleName.contains("Athom")) new_comp = new Athom(point.x, point.y);
+            else if (data.simpleName.contains("mComponent")) new_comp = new mComponent(point.x, point.y, "res/vd.jpg");
+            new_comp.config=data;
+            System.out.println(data.hashtable.get("qwe"));
+            component.add(new_comp);
             component.repaint();
             return true;
         } catch (Exception e) {

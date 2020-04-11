@@ -3,17 +3,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.HashMap;
 
-public class mComponent extends JComponent implements Serializable {
+public class mComponent extends JPanel implements Serializable {
     transient Image image, image2;
     Config config = new Config();
     int x0, y0;
 
     public mComponent(int x, int y, String bgrName) {
         super();
+        setLayout(null);
         setLocation(x, y);
         loadImages(bgrName);
         config.simpleName = getClass().getSimpleName();
+        config.hashtable.put("qwe","asd");
+
         setTransferHandler(new mTransferHandler(this, config));
 
         addMouseMotionListener(new MouseMotionAdapter() {
@@ -49,20 +53,33 @@ public class mComponent extends JComponent implements Serializable {
                 } else super.mousePressed(e);
             }
         });
+
+        //config.transparent=true;
+        setOpaque(false);
     }
 
     void loadImages(String bgrName) {
         try {
             InputStream is = getClass().getClassLoader().getResourceAsStream(bgrName);
             image = ImageIO.read(is);
-            int diameter = 60;
-            image = image.getScaledInstance(diameter, diameter, Image.SCALE_SMOOTH);
-            setPreferredSize(new Dimension(diameter, diameter));
-            setSize(diameter, diameter);
+            int w, h;
+            //image = image.getScaledInstance(120, 160, Image.SCALE_SMOOTH);
+            if (image != null) {
+                w = image.getWidth(this);
+                h = image.getHeight(this);
+            } else {
+                w = 120;
+                h = 160;
+            }
+            //int diameter = 60;
+            //image = image.getScaledInstance(diameter, diameter, Image.SCALE_SMOOTH);
+            setPreferredSize(new Dimension(w, h));
+            setSize(w, h);
 
-            is = getClass().getClassLoader().getResourceAsStream("res/puzyr.png");
+
+            is = getClass().getClassLoader().getResourceAsStream("res/puzyr2.png");
             image2 = ImageIO.read(is);
-            diameter = 15;
+            int diameter = 15;
             image2 = image2.getScaledInstance(diameter, diameter, Image.SCALE_SMOOTH);
 
         } catch (IOException e) {
@@ -71,14 +88,34 @@ public class mComponent extends JComponent implements Serializable {
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        //setOpaque(config.transparent);
+
+        super.paintComponent(g);
+
+
         g.drawImage(image, 0, 0, this);
         g.drawString("" + getX() + "," + getY(), 8, getHeight() / 2 + 6);
-        g.drawImage(image2, getWidth() - 20, getHeight() - 15, this);
-        g.drawImage(image2, getWidth() - 20, getHeight() - 32, this);
-        g.drawImage(image2, getWidth() - 20, getHeight() - 49, this);
-    }
 
+        if (config.transparent) {
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
+            g2d.setColor(getBackground());
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+            g2d.dispose();
+        }
+
+        Font oldf = g.getFont();
+        g.setFont(new Font("Serif", Font.BOLD, 18));
+        g.drawString(getComponents().length + "", 16, 20);
+        g.drawString("" + config.title, 16, getHeight() - 20);
+        g.setFont(oldf);
+        g.drawString("" + config.simpleName, 16, getHeight() - 38);
+        if (config.showled) {
+            g.drawImage(image2, getWidth() - 20, getHeight() - 15, this);
+            g.drawImage(image2, getWidth() - 20, getHeight() - 32, this);
+            g.drawImage(image2, getWidth() - 20, getHeight() - 49, this);
+        }
+    }
 
 }
