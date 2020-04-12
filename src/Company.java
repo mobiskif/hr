@@ -1,20 +1,16 @@
-import com.github.sarxos.webcam.Webcam;
-import com.github.sarxos.webcam.WebcamPanel;
-import com.github.sarxos.webcam.WebcamResolution;
-
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Sphere extends mComponent {
+public class Company extends mComponent {
     boolean already = false;
     mComponent npanel=null;
 
-    public Sphere(int x, int y) {
+    public Company(int x, int y) {
         super(x, y, "res/sphere.png");
         conf.put("title", "");
         conf.put("showLed", false);
 
-        Sphere sphere = this;
+        Company company = this;
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

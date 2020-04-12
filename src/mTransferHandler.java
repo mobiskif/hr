@@ -71,8 +71,8 @@ public class mTransferHandler extends TransferHandler implements Serializable {
             HashMap migrant_conf = (HashMap) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
             point = support.getDropLocation().getDropPoint();
             switch (migrant_conf.get("simpleName").toString()) {
-                case "Athom":
-                    migrant = new Athom(point.x, point.y);
+                case "Worker":
+                    migrant = new Worker(point.x, point.y);
                     break;
                 case "mComponent":
                     migrant = new mComponent(point.x, point.y, "res/vd2.jpg");
@@ -88,8 +88,8 @@ public class mTransferHandler extends TransferHandler implements Serializable {
                 HashMap child_conf = child.conf;
                 point = child.getLocation();
                 switch (child.getClass().getSimpleName()) {
-                    case "Athom":
-                        child = new Athom(point.x, point.y);
+                    case "Worker":
+                        child = new Worker(point.x, point.y);
                         break;
                     case "mComponent":
                         child = new mComponent(point.x, point.y, "res/vd2.jpg");

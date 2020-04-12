@@ -1,14 +1,13 @@
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 
-public class Athom extends mComponent {
+public class Worker extends mComponent {
 
-    public Athom(int x, int y) {
+    public Worker(int x, int y) {
         super(x,y,"res/small3.png");
         conf.put("title","Йехезкель");
 
-        Athom a=this;
+        Worker a=this;
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

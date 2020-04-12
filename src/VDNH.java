@@ -1,6 +1,3 @@
-import java.awt.*;
-import java.util.ArrayList;
-
 public class VDNH extends mComponent{
     public VDNH() {
         super(0, 0, "res/map.png");
@@ -22,11 +19,11 @@ public class VDNH extends mComponent{
         panel.conf.put("title","Сбербанк");
         //add(panel);
 
-        add(new Athom(30, 300));
-        add(new Sphere(560, 370));
-        add(new Sphere(350, 250));
-        add(new Sphere(200, 200));
-        add(new Sphere(680, 230));
-        add(new Sphere(300, 500));
+        add(new Worker(30, 300));
+        add(new Company(560, 370));
+        add(new Company(350, 250));
+        add(new Company(200, 200));
+        add(new Company(680, 230));
+        add(new Company(300, 500));
     }
 }
