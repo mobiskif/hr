@@ -72,7 +72,7 @@ public class mTransferHandler extends TransferHandler implements Serializable {
                     migrant = new Athom(point.x, point.y);
                     break;
                 case "mComponent":
-                    migrant = new mComponent(point.x, point.y, "res/vd.jpg");
+                    migrant = new mComponent(point.x, point.y, "res/vd2.jpg");
                     break;
                 case "VDNH":
                     migrant = new mComponent(point.x, point.y, "res/vdnh.jpg");
@@ -89,13 +89,12 @@ public class mTransferHandler extends TransferHandler implements Serializable {
                         child = new Athom(point.x, point.y);
                         break;
                     case "mComponent":
-                        child = new mComponent(point.x, point.y, "res/vd.jpg");
+                        child = new mComponent(point.x, point.y, "res/vd2.jpg");
                         break;
                     case "VDNH":
                         child = new mComponent(point.x, point.y, "res/vdnh.jpg");
                         break;
                 }
-
                 child.conf = child_conf;
                 migrant.add(child);
             }
