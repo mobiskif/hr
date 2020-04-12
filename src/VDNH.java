@@ -12,16 +12,21 @@ public class VDNH extends mComponent{
 
         panel = new mComponent(30, 50, "res/vd6.jpg");
         panel.conf.put("title","Газпром");
-        add(panel);
+        //add(panel);
 
         panel = new mComponent(100, 150, "res/vd7.jpg");
         panel.conf.put("title","РЖД");
-        add(panel);
+        //add(panel);
 
         panel = new mComponent(20, 200, "res/vd8.jpg");
         panel.conf.put("title","Сбербанк");
-        add(panel);
+        //add(panel);
 
-        add(new Athom(200, 20));
+        add(new Athom(30, 300));
+        add(new Sphere(560, 370));
+        add(new Sphere(350, 250));
+        add(new Sphere(200, 200));
+        add(new Sphere(680, 230));
+        add(new Sphere(300, 500));
     }
 }

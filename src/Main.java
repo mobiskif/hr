@@ -14,8 +14,9 @@ public class Main extends Applet {
     public static void main(String[] args) {
         JFrame f = new JFrame("ВДНХ");
         f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        f.setPreferredSize(new Dimension(1000,700));
-        f.add(new MainForm().$$$getRootComponent$$$());
+        MainForm mf = new MainForm();
+        f.add(mf.$$$getRootComponent$$$());
+        f.setPreferredSize(new Dimension(mf.objectsPanel.W,mf.objectsPanel.H));
         f.pack();
         f.setVisible(true);
     }

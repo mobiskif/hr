@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class MainForm {
     private JPanel panel;
-    private VDNH objectsPanel;
+    VDNH objectsPanel;
     private JButton button3;
 
 
@@ -18,7 +18,7 @@ public class MainForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame f = new JFrame("Cam");
-                //f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 Webcam webcam = Webcam.getDefault();
                 webcam.setViewSize(WebcamResolution.VGA.getSize());
                 WebcamPanel panel = new WebcamPanel(webcam);

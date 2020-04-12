@@ -54,9 +54,12 @@ public class mTransferHandler extends TransferHandler implements Serializable {
     @Override
     protected void exportDone(JComponent source, Transferable data, int action) {
         if (action == TransferHandler.MOVE) {
+            System.out.println("MOVE");
             Container parent = source.getParent();
             parent.remove(source);
             parent.repaint();
+            if (!parent.getClass().getSimpleName().contains("VDNH"))parent.setVisible(false);
+            ((mComponent)parent).offCam();
         }
     }
 
@@ -102,8 +105,11 @@ public class mTransferHandler extends TransferHandler implements Serializable {
 
             migrant.conf = migrant_conf;
             reciver.add(migrant);
-
             reciver.repaint();
+
+            if (!reciver.getClass().getSimpleName().contains("VDNH")) reciver.showCam();
+            //else reciver.offCam();
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();
