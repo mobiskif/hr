@@ -5,7 +5,8 @@ import java.awt.event.MouseMotionListener;
 public class Athom extends mComponent {
 
     public Athom(int x, int y) {
-        super(x,y,"res/small2.png");
+        super(x,y,"res/small3.png");
+        conf.put("title","Йехезкель");
 
         Athom a=this;
         addMouseListener(new MouseAdapter() {

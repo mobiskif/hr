@@ -90,13 +90,11 @@ public class mComponent extends JPanel implements Serializable {
 
     @Override
     public void paintComponent(Graphics g) {
-        //setOpaque(config.transparent);
-
         super.paintComponent(g);
-
+        Font oldf = g.getFont();
 
         g.drawImage(image, 0, 0, this);
-        g.drawString("" + getX() + "," + getY(), 8, getHeight() / 2 + 6);
+        //g.drawString("" + getX() + "," + getY(), 8, getHeight() / 2 + 6);
 
         if ((boolean)conf.get("transparent")) {
             Graphics2D g2d = (Graphics2D) g.create();
@@ -106,17 +104,16 @@ public class mComponent extends JPanel implements Serializable {
             g2d.dispose();
         }
 
-        Font oldf = g.getFont();
         g.setFont(new Font("Serif", Font.BOLD, 18));
-        g.drawString(getComponents().length + "", 16, 20);
+        //g.drawString(getComponents().length + "", 16, 20);
         g.drawString("" + conf.get("title"), 16, getHeight() - 20);
-        g.setFont(oldf);
-        g.drawString("" + conf.get("simpleName"), 16, getHeight() - 38);
+        //g.drawString("" + conf.get("simpleName"), 16, getHeight() - 38);
         if ((boolean)conf.get("showLed")) {
-            g.drawImage(image2, getWidth() - 20, getHeight() - 15, this);
-            g.drawImage(image2, getWidth() - 20, getHeight() - 32, this);
-            g.drawImage(image2, getWidth() - 20, getHeight() - 49, this);
+            g.drawImage(image2, getWidth() - 20, 5, this);
+            g.drawImage(image2, getWidth() - 20, 22, this);
+            g.drawImage(image2, getWidth() - 20, 39, this);
         }
+        g.setFont(oldf);
     }
 
 }
