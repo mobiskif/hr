@@ -3,6 +3,7 @@ import javax.swing.table.AbstractTableModel;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class mTableModel extends AbstractTableModel {
@@ -14,8 +15,9 @@ public class mTableModel extends AbstractTableModel {
     }
 
     void refresh(String str) {
-        query="https://api.hh.ru/vacancies?area=2&metro=15&text="+str;
         try {
+            str = URLEncoder.encode(str, "UTF-8");
+            query="https://api.hh.ru/vacancies?area=2&metro=15&text="+str;
             //URL url = new URL("https://api.hh.ru/employers?area=2&clusters=true&enable_snippets=true&no_magic=true&text=Директор&showClusters=false");
             URL url = new URL(query);
             InputStream is = url.openStream();
@@ -29,7 +31,7 @@ public class mTableModel extends AbstractTableModel {
                 row[1]=result.getJsonString("name").toString();
                 row[2]= result.getJsonObject("address").get("lat").toString();
                 row[3]= result.getJsonObject("address").get("lng").toString();
-                if (row[3].length()>5) {
+                if (row[2].length()>5) {
                     row[2] = String.valueOf((int) (-599000 +Double.valueOf(row[2])*10000));
                     row[3] = String.valueOf((int) (-303000 + Double.valueOf(row[3])*10000));
                     adata.add(row);

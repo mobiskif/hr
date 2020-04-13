@@ -27,7 +27,7 @@ public class VDNH extends mComponent {
             add(company);
         }
         Worker worker = new Worker(50, getHeight() - 200);
-        worker.conf.put("title", text);
+        worker.conf.put("salary", text);
         add(worker);
         repaint();
     }
