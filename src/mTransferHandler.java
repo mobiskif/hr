@@ -57,8 +57,9 @@ public class mTransferHandler extends TransferHandler implements Serializable {
             System.out.println("MOVE");
             Container parent = source.getParent();
             parent.remove(source);
+            //if (!parent.getClass().getSimpleName().contains("VDNH"))parent.setVisible(false);
+            ((mComponent)parent).initSmall();
             parent.repaint();
-            if (!parent.getClass().getSimpleName().contains("VDNH"))parent.setVisible(false);
             ((mComponent)parent).offCam();
         }
     }
@@ -75,10 +76,10 @@ public class mTransferHandler extends TransferHandler implements Serializable {
                     migrant = new Worker(point.x, point.y);
                     break;
                 case "mComponent":
-                    migrant = new mComponent(point.x, point.y, "res/vd2.jpg");
+                    migrant = new mComponent(point.x, point.y);
                     break;
                 case "VDNH":
-                    migrant = new mComponent(point.x, point.y, "res/vdnh.jpg");
+                    migrant = new mComponent(point.x, point.y);
                     break;
             }
 
@@ -92,10 +93,10 @@ public class mTransferHandler extends TransferHandler implements Serializable {
                         child = new Worker(point.x, point.y);
                         break;
                     case "mComponent":
-                        child = new mComponent(point.x, point.y, "res/vd2.jpg");
+                        child = new mComponent(point.x, point.y);
                         break;
                     case "VDNH":
-                        child = new mComponent(point.x, point.y, "res/vdnh.jpg");
+                        child = new mComponent(point.x, point.y);
                         break;
                 }
                 child.conf = child_conf;

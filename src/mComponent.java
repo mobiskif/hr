@@ -10,29 +10,32 @@ import java.io.*;
 import java.util.HashMap;
 
 public class mComponent extends JPanel implements Serializable {
-    transient Image image, image2;
+    transient Image image, smallImage, bigImage, ledImage;
     HashMap conf = new HashMap();
-    int x0, y0, W, H;
+    int x0, y0;
+    int W=100;
+    int H=100;
     Webcam webcam = null;
     WebcamPanel webcamPanel = null;
 
-    public mComponent(int x, int y, String bgrName) {
+    public mComponent(int x, int y) {
         super();
         setLayout(null);
         setLocation(x, y);
-        loadImages(bgrName);
         setOpaque(false);
 
         conf.put("simpleName", getClass().getSimpleName());
         conf.put("showLed", true);
         conf.put("transparent", false);
+        conf.put("smallImgName","res/sphere.png");
+        conf.put("bigImgName","res/vd6.jpg");
+        conf.put("ledImgName","res/puzyr2.png");
 
         setTransferHandler(new mTransferHandler(this));
 
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                //super.mouseDragged(e);
                 int x1, y1, dx, dy;
                 x1 = e.getX();
                 y1 = e.getY();
@@ -45,7 +48,6 @@ public class mComponent extends JPanel implements Serializable {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                //super.mouseMoved(e);
                 x0 = e.getX();
                 y0 = e.getY();
             }
@@ -54,8 +56,9 @@ public class mComponent extends JPanel implements Serializable {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //super.mouseClicked(e);
-                //if ((boolean) conf.get("showLed")) showCam();
+                super.mouseClicked(e);
+                if (image==bigImage) initSmall(); else initBig(); repaint();
+                offCam();
             }
 
             @Override
@@ -70,36 +73,37 @@ public class mComponent extends JPanel implements Serializable {
             }
         });
 
+        loadImages();
     }
 
-    void loadImages(String bgrName) {
+    void loadImages() {
         try {
-            InputStream is = getClass().getClassLoader().getResourceAsStream(bgrName);
-            image = ImageIO.read(is);
-            int w, h;
-            //image = image.getScaledInstance(120, 160, Image.SCALE_SMOOTH);
+            smallImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream(conf.get("smallImgName").toString()));
+            bigImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream(conf.get("bigImgName").toString()));
+            ledImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream(conf.get("ledImgName").toString()));
+            ledImage = ledImage.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+            initSmall();
+        } catch (IOException e) {e.printStackTrace();}
+    }
+
+    void initSmall() {
+            image=smallImage;
             if (image != null) {
-                w = image.getWidth(this);
-                h = image.getHeight(this);
-            } else {
-                w = 120;
-                h = 160;
+                W = image.getWidth(this);
+                H = image.getHeight(this);
+                setPreferredSize(new Dimension(W, H));
+                setSize(W, H);
             }
-            //int diameter = 60;
-            //image = image.getScaledInstance(diameter, diameter, Image.SCALE_SMOOTH);
-            setPreferredSize(new Dimension(w, h));
-            setSize(w, h);
-            W = w;
-            H = h;
+    }
 
-            is = getClass().getClassLoader().getResourceAsStream("res/puzyr2.png");
-            image2 = ImageIO.read(is);
-            int diameter = 15;
-            image2 = image2.getScaledInstance(diameter, diameter, Image.SCALE_SMOOTH);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void initBig() {
+            image=bigImage;
+            if (image != null) {
+                W = image.getWidth(this);
+                H = image.getHeight(this);
+                setPreferredSize(new Dimension(W, H));
+                setSize(W, H);
+            }
     }
 
     @Override
@@ -108,7 +112,7 @@ public class mComponent extends JPanel implements Serializable {
         Font oldf = g.getFont();
 
         g.drawImage(image, 0, 0, this);
-        g.drawString(getX() + "," + getY() + " " + getWidth() + "," + getHeight(), 4, 14);
+        //g.drawString(getX() + "," + getY() + " " + getWidth() + "," + getHeight(), 4, 14);
 
         if ((boolean) conf.get("transparent")) {
             Graphics2D g2d = (Graphics2D) g.create();
@@ -119,15 +123,18 @@ public class mComponent extends JPanel implements Serializable {
         }
 
         g.setFont(new Font("Serif", Font.BOLD, 18));
-        //g.drawString(getComponents().length + "", 16, 20);
         g.drawString("" + conf.get("title"), 16, getHeight() - 20);
-        //g.drawString("" + conf.get("simpleName"), 16, getHeight() - 38);
-        if ((boolean) conf.get("showLed")) {
-            g.drawImage(image2, getWidth() - 20, 5, this);
-            g.drawImage(image2, getWidth() - 20, 22, this);
-            g.drawImage(image2, getWidth() - 20, 39, this);
-        }
         g.setFont(oldf);
+        //g.drawString("" + conf.get("simpleName"), 16, getHeight() - 38);
+        //if ((boolean) conf.get("showLed")) {
+        if (image==bigImage) {
+            g.drawImage(ledImage, getWidth() - 20, 5, this);
+            g.drawImage(ledImage, getWidth() - 20, 22, this);
+            g.drawImage(ledImage, getWidth() - 20, 39, this);
+            g.drawString("ЗП: " + conf.get("salary"), 16, getHeight() - 40);
+        }
+
+        //g.drawRect(1,1,getWidth()-3,getHeight()-3);
     }
 
     public void showCam() {

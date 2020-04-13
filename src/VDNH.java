@@ -1,29 +1,34 @@
-public class VDNH extends mComponent{
+import javax.swing.*;
+import java.awt.*;
+
+public class VDNH extends mComponent {
+    mTableModel model;
+
     public VDNH() {
-        super(0, 0, "res/map.png");
-        conf.put("title","Санкт-Петербург");
-        conf.put("transparent",false);
-        conf.put("showLed",false);
+        super(0, 0);
+        conf.put("title", "Вакансии");
+        conf.put("transparent", true);
+        conf.put("showLed", false);
+        conf.put("bigImgName", "res/map2.png");
+        conf.put("smallImgName", "res/map2.png");
+        loadImages();
 
-        mComponent panel;
-
-        panel = new mComponent(30, 50, "res/vd6.jpg");
-        panel.conf.put("title","Газпром");
-        //add(panel);
-
-        panel = new mComponent(100, 150, "res/vd7.jpg");
-        panel.conf.put("title","РЖД");
-        //add(panel);
-
-        panel = new mComponent(20, 200, "res/vd8.jpg");
-        panel.conf.put("title","Сбербанк");
-        //add(panel);
-
-        add(new Worker(30, 300));
-        add(new Company(560, 370));
-        add(new Company(350, 250));
-        add(new Company(200, 200));
-        add(new Company(680, 230));
-        add(new Company(300, 500));
+        refresh("Java");
     }
+
+    public void refresh(String text) {
+        removeAll();
+        model = new mTableModel(text);
+        for (int i = 0; i < model.adata.size(); i++) {
+            Company company = new Company(Integer.valueOf(model.adata.get(i)[2]), Integer.valueOf(model.adata.get(i)[3]));
+            company.conf.put("title", model.adata.get(i)[1]);
+            company.conf.put("salary", model.adata.get(i)[2]);
+            add(company);
+        }
+        Worker worker = new Worker(50, getHeight() - 200);
+        worker.conf.put("title", text);
+        add(worker);
+        repaint();
+    }
+
 }
