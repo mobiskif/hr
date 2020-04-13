@@ -25,7 +25,9 @@
         <children>
           <component id="fad38" class="javax.swing.JTextField" binding="textField1" default-binding="true">
             <constraints/>
-            <properties/>
+            <properties>
+              <text value="SQL"/>
+            </properties>
           </component>
           <component id="cd067" class="javax.swing.JButton" binding="button1" default-binding="true">
             <constraints/>

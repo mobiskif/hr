@@ -11,5 +11,6 @@ public class Company extends mComponent {
         conf.put("showLed", false);
         conf.put("bigImgName","res/office.png");
         loadImages();
+        W=320;
     }
 }

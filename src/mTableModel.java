@@ -24,7 +24,7 @@ public class mTableModel extends AbstractTableModel {
             JsonArray results = obj.getJsonArray("items");
             for (JsonObject result : results.getValuesAs(JsonObject.class)) {
                 String[] row;
-                row = new String[4];
+                row = new String[7];
                 row[0]=result.getJsonString("id").toString();
                 row[1]=result.getJsonString("name").toString();
                 row[2]= result.getJsonObject("address").get("lat").toString();
@@ -34,6 +34,12 @@ public class mTableModel extends AbstractTableModel {
                     row[3] = String.valueOf((int) (-303000 + Double.valueOf(row[3])*10000));
                     adata.add(row);
                 }
+                if (!result.get("salary").toString().contains("null")) {
+                    row[4]= result.getJsonObject("salary").get("from").toString();
+                    row[5]= result.getJsonObject("salary").get("to").toString();
+                }
+                else {row[4]= ""; row[5]= "";}
+                row[6]= result.getJsonObject("employer").get("name").toString();
             }
         }
         catch (IOException e) {e.printStackTrace();}

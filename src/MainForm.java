@@ -40,6 +40,7 @@ public class MainForm {
         final JToolBar toolBar1 = new JToolBar();
         panel1.add(toolBar1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 20), null, 0, false));
         textField1 = new JTextField();
+        textField1.setText("SQL");
         toolBar1.add(textField1);
         button1 = new JButton();
         button1.setText("Button");

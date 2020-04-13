@@ -109,6 +109,7 @@ public class mComponent extends JPanel implements Serializable {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        setSize(W,H);
         Font oldf = g.getFont();
 
         g.drawImage(image, 0, 0, this);
@@ -116,23 +117,25 @@ public class mComponent extends JPanel implements Serializable {
 
         if ((boolean) conf.get("transparent")) {
             Graphics2D g2d = (Graphics2D) g.create();
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.35f));
             g2d.setColor(getBackground());
             g2d.fillRect(0, 0, getWidth(), getHeight());
             g2d.dispose();
         }
 
         g.setFont(new Font("Serif", Font.BOLD, 18));
-        g.drawString("" + conf.get("title"), 16, getHeight() - 20);
-        g.setFont(oldf);
+        //g.drawString("" + conf.get("title"), 16, getHeight() - 20);
+        g.drawString("" + conf.get("salary"), 16, getHeight() - 35);
         //g.drawString("" + conf.get("simpleName"), 16, getHeight() - 38);
         //if ((boolean) conf.get("showLed")) {
         if (image==bigImage) {
             g.drawImage(ledImage, getWidth() - 20, 5, this);
             g.drawImage(ledImage, getWidth() - 20, 22, this);
             g.drawImage(ledImage, getWidth() - 20, 39, this);
-            g.drawString("ЗП: " + conf.get("salary"), 16, getHeight() - 40);
+            g.drawString("" + conf.get("title") , 16, getHeight() - 15);
+            g.drawString("" + conf.get("employer"), 16, getHeight() - 55);
         }
+        g.setFont(oldf);
 
         //g.drawRect(1,1,getWidth()-3,getHeight()-3);
     }
