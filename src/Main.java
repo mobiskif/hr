@@ -12,9 +12,8 @@ public class Main extends Applet {
     }
 
     public static void main(String[] args) {
-        JFrame f = new JFrame("Вакансии");
+        JFrame f = new JFrame("HR");
         f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //f.add(new VDNH());
         f.add(new MainForm().$$$getRootComponent$$$());
         f.pack();
         f.setVisible(true);
