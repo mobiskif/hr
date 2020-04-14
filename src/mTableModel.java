@@ -8,18 +8,18 @@ import java.util.ArrayList;
 
 public class mTableModel extends AbstractTableModel {
     ArrayList<String[]> adata = new ArrayList<String[]>();
-    String query = "https://api.hh.ru/vacancies?text=IT&area=2&metro=15";
+    String[] headers = {"id","name", "lat", "lng", "from", "to", "employer"};
 
     public mTableModel(String text) {
-        this.refresh(text);
+        this.queryAPI(text);
     }
 
-    void refresh(String str) {
+    void queryAPI(String str) {
         try {
             str = URLEncoder.encode(str, "UTF-8");
-            query="https://api.hh.ru/vacancies?area=2&metro=15&text="+str;
+            str="https://api.hh.ru/vacancies?area=2&metro=15&text="+str;
             //URL url = new URL("https://api.hh.ru/employers?area=2&clusters=true&enable_snippets=true&no_magic=true&text=Директор&showClusters=false");
-            URL url = new URL(query);
+            URL url = new URL(str);
             InputStream is = url.openStream();
             JsonReader rdr = Json.createReader(is);
             JsonObject obj = rdr.readObject();
@@ -31,17 +31,13 @@ public class mTableModel extends AbstractTableModel {
                 row[1]=result.getJsonString("name").toString();
                 row[2]= result.getJsonObject("address").get("lat").toString();
                 row[3]= result.getJsonObject("address").get("lng").toString();
-                if (row[2].length()>5) {
-                    //row[2] = String.valueOf((int) (-599000 +Double.valueOf(row[2])*10000));
-                    //row[3] = String.valueOf((int) (-303000 + Double.valueOf(row[3])*10000));
-                    adata.add(row);
-                }
                 if (!result.get("salary").toString().contains("null")) {
                     row[4]= result.getJsonObject("salary").get("from").toString();
                     row[5]= result.getJsonObject("salary").get("to").toString();
                 }
                 else {row[4]= ""; row[5]= "";}
                 row[6]= result.getJsonObject("employer").get("name").toString();
+                if (row[2].length()>5) adata.add(row);
             }
         }
         catch (IOException e) {e.printStackTrace();}

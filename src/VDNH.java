@@ -12,11 +12,8 @@ public class VDNH extends mComponent {
         conf.put("showLed", false);
         conf.put("bigImgName", "res/map2.png");
         conf.put("smallImgName", "res/map2.png");
-        conf.put("employer", "Санкт-Петербург");
-        conf.put("title", "Вакансии");
         loadImages();
 
-        //refresh("SQL");
         prepareWorker("IT");
     }
 
@@ -42,7 +39,7 @@ public class VDNH extends mComponent {
             for (int i = 0; i < model.adata.size(); i++) {
                 int x = calcX(model.adata.get(i)[2]);
                 int y = calcY(model.adata.get(i)[3]);
-                Company company = new Company(x, y);
+                Company company = new Company(x, y, model.adata.get(i), model.headers);
                 company.conf.put("title", model.adata.get(i)[1]);
                 company.conf.put("salary", model.adata.get(i)[4] + ".." + model.adata.get(i)[5]);
                 company.conf.put("employer", model.adata.get(i)[6]);

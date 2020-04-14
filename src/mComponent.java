@@ -14,8 +14,8 @@ public class mComponent extends JPanel implements Serializable {
     transient Image image, smallImage, bigImage, ledImage;
     HashMap conf = new HashMap();
     int x0, y0;
-    int W=100;
-    int H=100;
+    int W = 100;
+    int H = 100;
     Webcam webcam = null;
     WebcamPanel webcamPanel = null;
     JTextArea txt;
@@ -29,21 +29,18 @@ public class mComponent extends JPanel implements Serializable {
         conf.put("simpleName", getClass().getSimpleName());
         conf.put("showLed", true);
         conf.put("transparent", false);
-        conf.put("smallImgName","res/sphere.png");
-        conf.put("bigImgName","res/vd6.jpg");
-        conf.put("ledImgName","res/puzyr2.png");
+        conf.put("smallImgName", "res/sphere.png");
+        conf.put("bigImgName", "res/vd6.jpg");
+        conf.put("ledImgName", "res/puzyr2.png");
 
 
         txt = new JTextArea();
 
         Set keys = conf.keySet();
-        for (Object key: keys) {
-            txt.append(key+": "+conf.get(key)+"\n");
+        for (Object key : keys) {
+            txt.append(key + ": " + conf.get(key) + "\n");
         }
         add(txt);
-        //getParent().setVisible(false);
-        //getParent().setVisible(true);
-
 
         setTransferHandler(new mTransferHandler(this));
 
@@ -71,7 +68,9 @@ public class mComponent extends JPanel implements Serializable {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if (image==bigImage) initSmall(); else initBig(); repaint();
+                if (image == bigImage) initSmall();
+                else initBig();
+                repaint();
                 offCam();
             }
 
@@ -97,38 +96,40 @@ public class mComponent extends JPanel implements Serializable {
             ledImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream(conf.get("ledImgName").toString()));
             ledImage = ledImage.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
             initSmall();
-        } catch (IOException e) {e.printStackTrace();}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     void initSmall() {
         txt.setVisible(false);
-            image=smallImage;
-            if (image != null) {
-                W = image.getWidth(this);
-                H = image.getHeight(this);
-                setPreferredSize(new Dimension(W, H));
-                setSize(W, H);
-            }
+        image = smallImage;
+        if (image != null) {
+            W = image.getWidth(this);
+            H = image.getHeight(this);
+            setPreferredSize(new Dimension(W, H));
+            setSize(W, H);
+        }
+        repaint();
     }
 
     void initBig() {
-        txt.setVisible(true);
-            image=bigImage;
-            if (image != null) {
-                W = image.getWidth(this);
-                H = image.getHeight(this);
-                setPreferredSize(new Dimension(W, H));
-                setSize(W, H);
-            }
+        //txt.setVisible(true);
+        image = bigImage;
+        if (image != null) {
+            W = image.getWidth(this);
+            H = image.getHeight(this);
+            setPreferredSize(new Dimension(W, H));
+            setSize(W, H);
+        }
+        repaint();
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        setSize(W,H);
-        Font oldf = g.getFont();
-
+        //setSize(W,H);
         g.drawImage(image, 0, 0, this);
         //g.drawString(getX() + "," + getY() + " " + getWidth() + "," + getHeight(), 4, 14);
 
@@ -140,25 +141,26 @@ public class mComponent extends JPanel implements Serializable {
             g2d.dispose();
         }
 
+        Font oldf = g.getFont();
         g.setFont(new Font("Serif", Font.BOLD, 18));
-        g.drawString("" + conf.get("salary"), 10, getHeight()/2+4);
+        g.drawString("" + conf.get("salary"), 10, getHeight() / 2 + 4);
         //if ((boolean) conf.get("showLed")) {
-        if (image==bigImage) {
+        if (image == bigImage) {
             g.drawImage(ledImage, getWidth() - 20, 5, this);
             g.drawImage(ledImage, getWidth() - 20, 22, this);
             g.drawImage(ledImage, getWidth() - 20, 39, this);
-            g.drawString("" + conf.get("title") , 10, getHeight() - 15);
+            g.drawString("" + conf.get("title"), 10, getHeight() - 15);
             g.drawString("" + conf.get("employer"), 10, getHeight() - 35);
         }
         g.setFont(oldf);
 
-        g.drawRect(1,1,getWidth()-3,getHeight()-3);
+        g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
     }
 
     public void showCam() {
         if (webcam != null) {
             webcam.close();
-            webcam=null;
+            webcam = null;
             getParent().remove(webcamPanel);
             getParent().repaint();
         } else {
@@ -170,7 +172,7 @@ public class mComponent extends JPanel implements Serializable {
             webcamPanel.setImageSizeDisplayed(true);
             webcamPanel.setMirrored(true);
             webcamPanel.setVisible(true);
-            webcamPanel.setBounds(getX() + getWidth()+4, getY(), 320, 240);
+            webcamPanel.setBounds(getX() + getWidth() + 4, getY(), 320, 240);
             getParent().add(webcamPanel);
         }
     }
