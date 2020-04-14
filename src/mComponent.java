@@ -18,7 +18,6 @@ public class mComponent extends JPanel implements Serializable {
     int H = 100;
     Webcam webcam = null;
     WebcamPanel webcamPanel = null;
-    JTextArea txt;
 
     public mComponent(int x, int y) {
         super();
@@ -33,14 +32,6 @@ public class mComponent extends JPanel implements Serializable {
         conf.put("bigImgName", "res/vd6.jpg");
         conf.put("ledImgName", "res/puzyr2.png");
 
-
-        txt = new JTextArea();
-
-        Set keys = conf.keySet();
-        for (Object key : keys) {
-            txt.append(key + ": " + conf.get(key) + "\n");
-        }
-        add(txt);
 
         setTransferHandler(new mTransferHandler(this));
 
@@ -102,7 +93,6 @@ public class mComponent extends JPanel implements Serializable {
     }
 
     void initSmall() {
-        txt.setVisible(false);
         image = smallImage;
         if (image != null) {
             W = image.getWidth(this);
@@ -154,7 +144,7 @@ public class mComponent extends JPanel implements Serializable {
         }
         g.setFont(oldf);
 
-        g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
+        //g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
     }
 
     public void showCam() {
