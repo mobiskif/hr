@@ -8,19 +8,15 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="8e60c" class="VDNH" binding="vdnh">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-      </component>
       <toolbar id="39bcd">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="-1" height="20"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <floatable value="false"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="fad38" class="javax.swing.JTextField" binding="textField1" default-binding="true">
@@ -37,6 +33,12 @@
           </component>
         </children>
       </toolbar>
+      <component id="9b265" class="VDNH" binding="vdnh">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
     </children>
   </grid>
 </form>

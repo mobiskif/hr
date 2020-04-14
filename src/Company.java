@@ -9,8 +9,8 @@ public class Company extends mComponent {
         super(x, y);
         conf.put("title", "");
         conf.put("showLed", false);
-        conf.put("bigImgName","res/office.png");
+        conf.put("bigImgName","res/office.jpg");
         loadImages();
-        W=320;
+        W=160;
     }
 }

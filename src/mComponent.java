@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.HashMap;
+import java.util.Set;
 
 public class mComponent extends JPanel implements Serializable {
     transient Image image, smallImage, bigImage, ledImage;
@@ -17,10 +18,11 @@ public class mComponent extends JPanel implements Serializable {
     int H=100;
     Webcam webcam = null;
     WebcamPanel webcamPanel = null;
+    JTextArea txt;
 
     public mComponent(int x, int y) {
         super();
-        setLayout(null);
+        setLayout(new FlowLayout(FlowLayout.LEFT));
         setLocation(x, y);
         setOpaque(false);
 
@@ -30,6 +32,18 @@ public class mComponent extends JPanel implements Serializable {
         conf.put("smallImgName","res/sphere.png");
         conf.put("bigImgName","res/vd6.jpg");
         conf.put("ledImgName","res/puzyr2.png");
+
+
+        txt = new JTextArea();
+
+        Set keys = conf.keySet();
+        for (Object key: keys) {
+            txt.append(key+": "+conf.get(key)+"\n");
+        }
+        add(txt);
+        //getParent().setVisible(false);
+        //getParent().setVisible(true);
+
 
         setTransferHandler(new mTransferHandler(this));
 
@@ -87,6 +101,7 @@ public class mComponent extends JPanel implements Serializable {
     }
 
     void initSmall() {
+        txt.setVisible(false);
             image=smallImage;
             if (image != null) {
                 W = image.getWidth(this);
@@ -97,6 +112,7 @@ public class mComponent extends JPanel implements Serializable {
     }
 
     void initBig() {
+        txt.setVisible(true);
             image=bigImage;
             if (image != null) {
                 W = image.getWidth(this);
@@ -109,6 +125,7 @@ public class mComponent extends JPanel implements Serializable {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         setSize(W,H);
         Font oldf = g.getFont();
 
@@ -124,20 +141,18 @@ public class mComponent extends JPanel implements Serializable {
         }
 
         g.setFont(new Font("Serif", Font.BOLD, 18));
-        //g.drawString("" + conf.get("title"), 16, getHeight() - 20);
-        g.drawString("" + conf.get("salary"), 16, getHeight() - 35);
-        //g.drawString("" + conf.get("simpleName"), 16, getHeight() - 38);
+        g.drawString("" + conf.get("salary"), 10, getHeight()/2+4);
         //if ((boolean) conf.get("showLed")) {
         if (image==bigImage) {
             g.drawImage(ledImage, getWidth() - 20, 5, this);
             g.drawImage(ledImage, getWidth() - 20, 22, this);
             g.drawImage(ledImage, getWidth() - 20, 39, this);
-            g.drawString("" + conf.get("title") , 16, getHeight() - 15);
-            g.drawString("" + conf.get("employer"), 16, getHeight() - 55);
+            g.drawString("" + conf.get("title") , 10, getHeight() - 15);
+            g.drawString("" + conf.get("employer"), 10, getHeight() - 35);
         }
         g.setFont(oldf);
 
-        //g.drawRect(1,1,getWidth()-3,getHeight()-3);
+        g.drawRect(1,1,getWidth()-3,getHeight()-3);
     }
 
     public void showCam() {

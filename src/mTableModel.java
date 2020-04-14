@@ -32,8 +32,8 @@ public class mTableModel extends AbstractTableModel {
                 row[2]= result.getJsonObject("address").get("lat").toString();
                 row[3]= result.getJsonObject("address").get("lng").toString();
                 if (row[2].length()>5) {
-                    row[2] = String.valueOf((int) (-599000 +Double.valueOf(row[2])*10000));
-                    row[3] = String.valueOf((int) (-303000 + Double.valueOf(row[3])*10000));
+                    //row[2] = String.valueOf((int) (-599000 +Double.valueOf(row[2])*10000));
+                    //row[3] = String.valueOf((int) (-303000 + Double.valueOf(row[3])*10000));
                     adata.add(row);
                 }
                 if (!result.get("salary").toString().contains("null")) {
