@@ -5,20 +5,17 @@ import java.awt.event.ActionListener;
 
 public class MainForm {
     private JPanel panel1;
-    JTextField textField1;
     private JButton button1;
     private parentPanel parentPanel1;
-    private JList list1;
-    private JTextArea textArea1;
-    private JTextPane textPane1;
-    private JEditorPane editorPane1;
+    private JTextField textField1;
 
     public MainForm() {
 
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //vdnh.refresh(textField1.getText());
+                //refresh(textField1.getText());
+                parentPanel1.queryAPI(textField1.getText());
             }
         });
     }
@@ -45,12 +42,12 @@ public class MainForm {
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
         panel1.add(toolBar1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 20), null, 0, false));
-        textField1 = new JTextField();
-        textField1.setText("SQL");
-        toolBar1.add(textField1);
         button1 = new JButton();
         button1.setText("Поиск");
         toolBar1.add(button1);
+        textField1 = new JTextField();
+        textField1.setText("Java");
+        toolBar1.add(textField1);
     }
 
     /**

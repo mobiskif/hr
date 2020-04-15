@@ -25,16 +25,16 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="fad38" class="javax.swing.JTextField" binding="labelTextField" default-binding="true">
-            <constraints/>
-            <properties>
-              <text value="SQL"/>
-            </properties>
-          </component>
           <component id="cd067" class="javax.swing.JButton" binding="button1" default-binding="true">
             <constraints/>
             <properties>
               <text value="Поиск"/>
+            </properties>
+          </component>
+          <component id="a0705" class="javax.swing.JTextField" binding="textField1">
+            <constraints/>
+            <properties>
+              <text value="Java"/>
             </properties>
           </component>
         </children>

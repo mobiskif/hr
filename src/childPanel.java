@@ -8,8 +8,9 @@ import java.io.IOException;
 
 public class childPanel extends JPanel {
     int x0, y0;
-    Object[] data;
+    String[] data;
     Image image;
+    Dimension dimension;
     //String[] columnNames = {"First Name", "Last Name", "Sport", "# of Years", "Vegetarian"};
 
     void prepareTable(JComponent pan) {
@@ -53,7 +54,6 @@ public class childPanel extends JPanel {
 
     }
 
-
     void prepareArea(JComponent pan) {
         JTextArea area = new JTextArea();
         //for (int i = 0; i < data.length ; i++) area.append(columnNames[i]+": "+data[i]+"\n");
@@ -71,12 +71,30 @@ public class childPanel extends JPanel {
         });
     }
 
-    public childPanel(Object[] d) {
+    double minLat = 59.84;
+    double maxLat = 60.1;
+    double minLng = 30.31;
+    double maxLng = 30.35;
+
+    public int calcX(String lat) {
+        return (int) (dimension.width * (Double.valueOf(lat) - minLat) / (maxLat - minLat));
+    }
+
+    public int calcY(String lng) {
+        return (int) (dimension.height * (Double.valueOf(lng) - minLng) / (maxLng - minLng));
+    }
+
+    public childPanel(String[] data, Dimension dimension) {
         super();
-        data= d;
+        this.data= data;
+        this.dimension = dimension;
         setOpaque(false);//фолс - прозрачный
         //setPreferredSize(new Dimension(150, 150));//нужен для фловлейаут
         //setSize(new Dimension(50, 50)); //нужен для пайнт
+
+        int x = calcX(data[2]);
+        int y = calcY(data[3]);
+        setLocation(new Point(x,y));
 
         JPanel pan = this;
         addMouseListener(new MouseAdapter() {

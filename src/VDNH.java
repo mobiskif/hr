@@ -34,7 +34,7 @@ public class VDNH extends mComponent {
 
     public void refresh(String text) {
         removeAll();
-        model = new mTableModel(text);
+        model = new mTableModel(new Dimension(getWidth(),getHeight()));
         if (model!=null) {
             for (int i = 0; i < model.adata.size(); i++) {
                 int x = calcX(model.adata.get(i)[2]);

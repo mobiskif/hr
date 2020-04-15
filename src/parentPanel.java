@@ -1,35 +1,55 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class parentPanel extends JPanel {
-    Object[][] data = {
-            {"Kathy", "Smith", "Snowboarding", "5", "yes"},
-            {"John", "Doe", "Rowing", "2", "no"},
-    };
     mTableModel model;
+    Image image;
 
     public parentPanel() {
-        setPreferredSize(new Dimension(500, 400)); //нужен для майнформ
-        setLayout(new FlowLayout());
-        JPanel pan1 = new childPanel(data[0]);
-        pan1.setLocation(18, 10);
-        add(pan1);
-        JPanel pan2 = new childPanel(data[1]);
-        pan2.setLocation(100, 40);
-        add(pan2);
+        Dimension initdim = new Dimension(500, 400);
+        setPreferredSize(initdim); //нужен для майнформ
+        model = new mTableModel(initdim);
+        //setLayout(new FlowLayout());
         setLayout(null);
+        loadImages();
+    }
 
-        model = new mTableModel("IT");
-        JPanel pan3 = new childPanel(model.adata.get(0));
-        pan3.setLocation(70, 20);
-        add(pan3);
+    void loadImages() {
+        try {
+            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/map2.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (image != null) {
+            int W = image.getWidth(this);
+            int H = image.getHeight(this);
+            setPreferredSize(new Dimension(W, H));
+            setSize(W, H);
+        }
+        repaint();
 
-/* */
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        g.drawRect(1, 1, getWidth()-3, getHeight()-3);
+        g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
     }
+
+    public void queryAPI(String text) {
+        Dimension dimension = new Dimension(getWidth(), getHeight());
+        model.queryAPI(text);
+        removeAll();
+        for (String[] row : model.adata) add(new childPanel(row, dimension));
+        repaint();
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image,0,0,this);
+    }
+
 }

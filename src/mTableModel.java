@@ -1,5 +1,6 @@
 import javax.json.*;
 import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -9,12 +10,21 @@ import java.util.ArrayList;
 public class mTableModel extends AbstractTableModel {
     ArrayList<String[]> adata = new ArrayList<String[]>();
     String[] headers = {"id","name", "lat", "lng", "from", "to", "employer"};
+    Dimension dimension;
+    String[][] data = {
+            {"123", "Рабочий", "59.91", "30.32", "50000", "60000", "Газпром"},
+            {"345", "Дворник", "59.88", "30.33", "50000", "60000", "РЖД"},
+    };
 
-    public mTableModel(String text) {
-        this.queryAPI(text);
+    public mTableModel(Dimension d) {
+        dimension = d;
+        adata.add(data[0]);
+        adata.add(data[1]);
+        //this.queryAPI("Java");
     }
 
     void queryAPI(String str) {
+        adata.clear();
         try {
             str = URLEncoder.encode(str, "UTF-8");
             str="https://api.hh.ru/vacancies?area=2&metro=15&text="+str;
