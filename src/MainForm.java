@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class MainForm {
     private JPanel panel1;
-    private JTextField textField1;
+    JTextField textField1;
     private JButton button1;
     private parentPanel parentPanel1;
     private JList list1;
@@ -14,7 +14,7 @@ public class MainForm {
     private JEditorPane editorPane1;
 
     public MainForm() {
-        
+
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -49,7 +49,7 @@ public class MainForm {
         textField1.setText("SQL");
         toolBar1.add(textField1);
         button1 = new JButton();
-        button1.setText("Button");
+        button1.setText("Поиск");
         toolBar1.add(button1);
     }
 

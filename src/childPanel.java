@@ -1,24 +1,21 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.IOException;
 
 public class childPanel extends JPanel {
     int x0, y0;
-
-    Object[][] data = {
-            {"Kathy", "Smith", "Snowboarding", new Integer(5), new Boolean(false)},
-            {"John", "Doe", "Rowing", new Integer(3), new Boolean(true)},
-            {"Sue", "Black", "Knitting", new Integer(2), new Boolean(false)},
-            {"Jane", "White", "Speed reading", new Integer(20), new Boolean(true)},
-            {"Joe", "Brown", "Pool", new Integer(10), new Boolean(false)}
-    };
-    String[] columnNames = {"First Name", "Last Name", "Sport", "# of Years", "Vegetarian"};
+    Object[] data;
+    Image image;
+    //String[] columnNames = {"First Name", "Last Name", "Sport", "# of Years", "Vegetarian"};
 
     void prepareTable(JComponent pan) {
         setLayout(new FlowLayout());
-        JTable table = new JTable(data, columnNames);
+        //JTable table = new JTable(data, columnNames);
+        JTable table = new JTable();
         JScrollPane scrollPane = new JScrollPane(table);
         table.setPreferredScrollableViewportSize(
                 new Dimension(
@@ -40,11 +37,30 @@ public class childPanel extends JPanel {
         setSize(new Dimension(scrollPane.getPreferredSize().width + 6, scrollPane.getPreferredSize().height + 20));
     }
 
+    void loadImages() {
+        try {
+            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/sphere.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (image != null) {
+            int W = image.getWidth(this);
+            int H = image.getHeight(this);
+            setPreferredSize(new Dimension(W, H));
+            setSize(W, H);
+        }
+        repaint();
+
+    }
+
+
     void prepareArea(JComponent pan) {
-        setLayout(new FlowLayout());
         JTextArea area = new JTextArea();
-        area.append("sassaf\n3452345\nfasdfasdf");
-        JScrollPane scrollPane = new JScrollPane(area);
+        //for (int i = 0; i < data.length ; i++) area.append(columnNames[i]+": "+data[i]+"\n");
+        for (int i = 0; i < data.length ; i++) area.append(data[i]+"\n");
+        add(area);
+        setSize(new Dimension(area.getPreferredSize().width, area.getPreferredSize().height));
+
         area.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -53,23 +69,20 @@ public class childPanel extends JPanel {
                 setSize(new Dimension(50, 50)); //нужен для пайнт
             }
         });
-        add(scrollPane);
-        setSize(new Dimension(scrollPane.getPreferredSize().width + 6, scrollPane.getPreferredSize().height + 20));
     }
 
-    public childPanel() {
+    public childPanel(Object[] d) {
         super();
+        data= d;
         setOpaque(false);//фолс - прозрачный
-
-        setPreferredSize(new Dimension(150, 150));//нужен для фловлейаут
-        setSize(new Dimension(50, 50)); //нужен для пайнт
+        //setPreferredSize(new Dimension(150, 150));//нужен для фловлейаут
+        //setSize(new Dimension(50, 50)); //нужен для пайнт
 
         JPanel pan = this;
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                //if (getComponents().length < 1) prepareTable(pan);
                 if (getComponents().length < 1) prepareArea(pan);
                 getParent().setVisible(false);
                 getParent().setVisible(true);
@@ -95,13 +108,20 @@ public class childPanel extends JPanel {
                 y0 = e.getY();
             }
         });
+
+        loadImages();
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        //g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
-        if (getComponents().length == 0) g.drawOval(0, 0, getWidth(), getHeight());
+        //if (getComponents().length == 0) g.drawOval(0, 0, getWidth(), getHeight());
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image,0,0,this);
     }
 
 }

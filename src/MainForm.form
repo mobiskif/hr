@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="39" width="177" height="157"/>
+      <xy x="20" y="39" width="248" height="157"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -25,7 +25,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="fad38" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+          <component id="fad38" class="javax.swing.JTextField" binding="labelTextField" default-binding="true">
             <constraints/>
             <properties>
               <text value="SQL"/>
@@ -34,7 +34,7 @@
           <component id="cd067" class="javax.swing.JButton" binding="button1" default-binding="true">
             <constraints/>
             <properties>
-              <text value="Button"/>
+              <text value="Поиск"/>
             </properties>
           </component>
         </children>
