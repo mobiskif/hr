@@ -11,6 +11,7 @@ public class childPanel extends JPanel {
     String[] data;
     Image image;
     Dimension dimension;
+    helperPanel helper;
     //String[] columnNames = {"First Name", "Last Name", "Sport", "# of Years", "Vegetarian"};
 
     void prepareTable(JComponent pan) {
@@ -84,10 +85,11 @@ public class childPanel extends JPanel {
         return (int) (dimension.height * (Double.valueOf(lng) - minLng) / (maxLng - minLng));
     }
 
-    public childPanel(String[] data, Dimension dimension) {
+    public childPanel(String[] data, Dimension dimension, helperPanel helper) {
         super();
         this.data= data;
         this.dimension = dimension;
+        this.helper = helper;
         setOpaque(false);//фолс - прозрачный
         //setPreferredSize(new Dimension(150, 150));//нужен для фловлейаут
         //setSize(new Dimension(50, 50)); //нужен для пайнт
@@ -104,6 +106,30 @@ public class childPanel extends JPanel {
                 if (getComponents().length < 1) prepareArea(pan);
                 getParent().setVisible(false);
                 getParent().setVisible(true);
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                //if (getComponents().length < 1) prepareArea(pan);
+                //getParent().setVisible(false);
+                //getParent().setVisible(true);
+                helper.setData(data);
+                helper.setVisible(true);
+                helper.setLocation(getX(),getY());
+                //setSize(helper.area.getWidth(),helper.area.getHeight());
+                //getParent().repaint();
+                //getParent().setVisible(false);
+                //getParent().setVisible(true);
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                super.mouseExited(e);
+                //helper.setVisible(false);
+                //pan.removeAll();
+                //setSize(new Dimension(50, 50)); //нужен для пайнт
             }
         });
 
@@ -125,6 +151,7 @@ public class childPanel extends JPanel {
                 x0 = e.getX();
                 y0 = e.getY();
             }
+
         });
 
         loadImages();

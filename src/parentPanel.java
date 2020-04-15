@@ -6,6 +6,7 @@ import java.io.IOException;
 public class parentPanel extends JPanel {
     mTableModel model;
     Image image;
+    helperPanel helper;
 
     public parentPanel() {
         Dimension initdim = new Dimension(500, 400);
@@ -14,6 +15,9 @@ public class parentPanel extends JPanel {
         //setLayout(new FlowLayout());
         setLayout(null);
         loadImages();
+        helper=new helperPanel();
+        //helper.setComponentZOrder(this,1);
+        helper.setVisible(false);
     }
 
     void loadImages() {
@@ -29,20 +33,15 @@ public class parentPanel extends JPanel {
             setSize(W, H);
         }
         repaint();
-
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
     }
 
     public void queryAPI(String text) {
         Dimension dimension = new Dimension(getWidth(), getHeight());
         model.queryAPI(text);
         removeAll();
-        for (String[] row : model.adata) add(new childPanel(row, dimension));
+        for (String[] row : model.adata) add(new childPanel(row, dimension, helper));
+        add(helper);
+        setComponentZOrder(helper,0);
         repaint();
     }
 
@@ -50,6 +49,7 @@ public class parentPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image,0,0,this);
+        g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
     }
 
 }

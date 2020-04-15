@@ -14,7 +14,12 @@ public class MainForm {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //refresh(textField1.getText());
+                parentPanel1.queryAPI(textField1.getText());
+            }
+        });
+        textField1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 parentPanel1.queryAPI(textField1.getText());
             }
         });
