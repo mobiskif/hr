@@ -8,8 +8,13 @@ public class MainForm {
     private JTextField textField1;
     private JButton button1;
     private parentPanel parentPanel1;
+    private JList list1;
+    private JTextArea textArea1;
+    private JTextPane textPane1;
+    private JEditorPane editorPane1;
 
     public MainForm() {
+        
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -8,22 +8,13 @@ public class childPanel extends JPanel {
     int x0, y0;
 
     Object[][] data = {
-            {"Kathy", "Smith",
-                    "Snowboarding", new Integer(5), new Boolean(false)},
-            {"John", "Doe",
-                    "Rowing", new Integer(3), new Boolean(true)},
-            {"Sue", "Black",
-                    "Knitting", new Integer(2), new Boolean(false)},
-            {"Jane", "White",
-                    "Speed reading", new Integer(20), new Boolean(true)},
-            {"Joe", "Brown",
-                    "Pool", new Integer(10), new Boolean(false)}
+            {"Kathy", "Smith", "Snowboarding", new Integer(5), new Boolean(false)},
+            {"John", "Doe", "Rowing", new Integer(3), new Boolean(true)},
+            {"Sue", "Black", "Knitting", new Integer(2), new Boolean(false)},
+            {"Jane", "White", "Speed reading", new Integer(20), new Boolean(true)},
+            {"Joe", "Brown", "Pool", new Integer(10), new Boolean(false)}
     };
-    String[] columnNames = {"First Name",
-            "Last Name",
-            "Sport",
-            "# of Years",
-            "Vegetarian"};
+    String[] columnNames = {"First Name", "Last Name", "Sport", "# of Years", "Vegetarian"};
 
     void prepareTable(JComponent pan) {
         setLayout(new FlowLayout());
@@ -49,19 +40,37 @@ public class childPanel extends JPanel {
         setSize(new Dimension(scrollPane.getPreferredSize().width + 6, scrollPane.getPreferredSize().height + 20));
     }
 
+    void prepareArea(JComponent pan) {
+        setLayout(new FlowLayout());
+        JTextArea area = new JTextArea();
+        area.append("sassaf\n3452345\nfasdfasdf");
+        JScrollPane scrollPane = new JScrollPane(area);
+        area.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                pan.removeAll();
+                setSize(new Dimension(50, 50)); //нужен для пайнт
+            }
+        });
+        add(scrollPane);
+        setSize(new Dimension(scrollPane.getPreferredSize().width + 6, scrollPane.getPreferredSize().height + 20));
+    }
+
     public childPanel() {
         super();
-        setOpaque(false);
+        setOpaque(false);//фолс - прозрачный
 
-        setPreferredSize(new Dimension(150,150));//нужен для фловлейаут
+        setPreferredSize(new Dimension(150, 150));//нужен для фловлейаут
         setSize(new Dimension(50, 50)); //нужен для пайнт
-        JPanel pan = this;
 
+        JPanel pan = this;
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if (getComponents().length < 1) prepareTable(pan);
+                //if (getComponents().length < 1) prepareTable(pan);
+                if (getComponents().length < 1) prepareArea(pan);
                 getParent().setVisible(false);
                 getParent().setVisible(true);
             }
@@ -92,7 +101,7 @@ public class childPanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         //g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
-        if(getComponents().length==0)g.drawOval(0,0,getWidth(),getHeight());
+        if (getComponents().length == 0) g.drawOval(0, 0, getWidth(), getHeight());
     }
 
 }
