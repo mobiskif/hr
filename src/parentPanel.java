@@ -6,7 +6,8 @@ import java.io.IOException;
 public class parentPanel extends JPanel {
     mTableModel model;
     Image image;
-    helperPanel helper;
+    helperPanel helper = new helperPanel();
+    videoPanel video = new videoPanel();
 
     public parentPanel() {
         Dimension initdim = new Dimension(500, 400);
@@ -15,9 +16,9 @@ public class parentPanel extends JPanel {
         //setLayout(new FlowLayout());
         setLayout(null);
         loadImages();
-        helper=new helperPanel();
-        //helper.setComponentZOrder(this,1);
-        helper.setVisible(false);
+        add(video);
+        video.setLocation(getWidth()-video.getWidth(),0);
+
     }
 
     void loadImages() {
@@ -42,6 +43,7 @@ public class parentPanel extends JPanel {
         for (String[] row : model.adata) add(new childPanel(row, dimension, helper));
         add(helper);
         setComponentZOrder(helper,0);
+        add(video);
         repaint();
     }
 
