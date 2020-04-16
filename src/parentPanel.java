@@ -8,16 +8,27 @@ public class parentPanel extends JPanel {
     Image image;
     helperPanel helper = new helperPanel();
     videoPanel video = new videoPanel();
+    workerPanel worker = new workerPanel();
 
     public parentPanel() {
-        Dimension initdim = new Dimension(500, 400);
-        setPreferredSize(initdim); //нужен для майнформ
-        model = new mTableModel(initdim);
+        Dimension dimension = new Dimension(500, 400);
+        setPreferredSize(dimension); //нужен для майнформ
+        model = new mTableModel(dimension);
         //setLayout(new FlowLayout());
         setLayout(null);
         loadImages();
+        add(helper);
         add(video);
         video.setLocation(getWidth()-video.getWidth(),0);
+
+        String[] testdata = {"123", "Рабочий", "59.91", "30.32", "50000", "60000", "Газпром"};
+        add(new childPanel(testdata, dimension, helper));
+
+        //workerPanel worker = new workerPanel();
+        add(worker);
+        setComponentZOrder(worker,0);
+
+        setTransferHandler(new workerTransferHandler(this));
 
     }
 
@@ -42,8 +53,11 @@ public class parentPanel extends JPanel {
         removeAll();
         for (String[] row : model.adata) add(new childPanel(row, dimension, helper));
         add(helper);
-        setComponentZOrder(helper,0);
+        setComponentZOrder(helper,1);
         add(video);
+
+        add(worker);
+        setComponentZOrder(worker,0);
         repaint();
     }
 

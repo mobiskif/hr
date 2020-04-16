@@ -12,6 +12,8 @@ public class childPanel extends JPanel {
     Image image;
     Dimension dimension;
     helperPanel helper;
+    boolean fixed=false;
+
     //String[] columnNames = {"First Name", "Last Name", "Sport", "# of Years", "Vegetarian"};
 
     void prepareTable(JComponent pan) {
@@ -94,6 +96,8 @@ public class childPanel extends JPanel {
         //setPreferredSize(new Dimension(150, 150));//нужен для фловлейаут
         //setSize(new Dimension(50, 50)); //нужен для пайнт
 
+        setTransferHandler(new workerTransferHandler(this));
+
         int x = calcX(data[2]);
         int y = calcY(data[3]);
         setLocation(new Point(x,y));
@@ -103,9 +107,14 @@ public class childPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if (getComponents().length < 1) prepareArea(pan);
-                getParent().setVisible(false);
-                getParent().setVisible(true);
+                fixed=!fixed;
+                helper.fixed=fixed;
+                getParent().repaint();
+                ((parentPanel)getParent()).video.setLocation(helper.getX()+helper.getWidth(), getY());
+
+                //if (getComponents().length < 1) prepareArea(pan);
+                //getParent().setVisible(false);
+                //getParent().setVisible(true);
             }
 
             @Override
@@ -114,9 +123,11 @@ public class childPanel extends JPanel {
                 //if (getComponents().length < 1) prepareArea(pan);
                 //getParent().setVisible(false);
                 //getParent().setVisible(true);
-                helper.setData(data);
-                helper.setVisible(true);
-                helper.setLocation(getX(),getY());
+                if (!fixed) {
+                    helper.setData(data);
+                    helper.setVisible(true);
+                    helper.setLocation(getX()+getWidth(), getY());
+                }
                 //setSize(helper.area.getWidth(),helper.area.getHeight());
                 //getParent().repaint();
                 //getParent().setVisible(false);
@@ -127,6 +138,7 @@ public class childPanel extends JPanel {
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
+                if(!fixed) helper.setVisible(false);
                 //helper.setVisible(false);
                 //pan.removeAll();
                 //setSize(new Dimension(50, 50)); //нужен для пайнт
@@ -155,12 +167,6 @@ public class childPanel extends JPanel {
         });
 
         loadImages();
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        //if (getComponents().length == 0) g.drawOval(0, 0, getWidth(), getHeight());
     }
 
     @Override

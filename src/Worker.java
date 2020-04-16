@@ -7,7 +7,7 @@ public class Worker extends mComponent {
         conf.put("showLed", true);
         conf.put("bigImgName","res/small3.png");
         conf.put("smallImgName","res/small3.png");
-        conf.put("salary","SQL");
+        conf.put("salary","");
         loadImages();
     }
 }
