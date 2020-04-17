@@ -12,9 +12,7 @@ public class childPanel extends JPanel {
     Image image;
     Dimension dimension;
     helperPanel helper;
-    boolean fixed=false;
-
-    //String[] columnNames = {"First Name", "Last Name", "Sport", "# of Years", "Vegetarian"};
+    boolean fixed = false;
 
     void prepareTable(JComponent pan) {
         setLayout(new FlowLayout());
@@ -57,39 +55,22 @@ public class childPanel extends JPanel {
 
     }
 
-    void prepareArea(JComponent pan) {
-        JTextArea area = new JTextArea();
-        //for (int i = 0; i < data.length ; i++) area.append(columnNames[i]+": "+data[i]+"\n");
-        for (int i = 0; i < data.length ; i++) area.append(data[i]+"\n");
-        add(area);
-        setSize(new Dimension(area.getPreferredSize().width, area.getPreferredSize().height));
+    double minLat = 59.98;
+    double maxLat = 59.88;
+    double minLng = 30.21;
+    double maxLng = 30.53;
 
-        area.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                pan.removeAll();
-                setSize(new Dimension(50, 50)); //нужен для пайнт
-            }
-        });
+    public int calcY(String lat) {
+        return (int) ((Double.valueOf(lat) - minLat) * dimension.height / (maxLat - minLat));
     }
 
-    double minLat = 59.84;
-    double maxLat = 60.1;
-    double minLng = 30.31;
-    double maxLng = 30.35;
-
-    public int calcX(String lat) {
-        return (int) (dimension.width * (Double.valueOf(lat) - minLat) / (maxLat - minLat));
-    }
-
-    public int calcY(String lng) {
-        return (int) (dimension.height * (Double.valueOf(lng) - minLng) / (maxLng - minLng));
+    public int calcX(String lng) {
+        return (int) ((Double.valueOf(lng) - minLng) * dimension.width / (maxLng - minLng));
     }
 
     public childPanel(String[] data, Dimension dimension, helperPanel helper) {
         super();
-        this.data= data;
+        this.data = data;
         this.dimension = dimension;
         this.helper = helper;
         setOpaque(false);//фолс - прозрачный
@@ -98,51 +79,36 @@ public class childPanel extends JPanel {
 
         setTransferHandler(new workerTransferHandler(this));
 
-        int x = calcX(data[2]);
-        int y = calcY(data[3]);
-        setLocation(new Point(x,y));
+        int y = calcY(data[2]);
+        int x = calcX(data[3]);
+        setLocation(new Point(x, y));
 
-        JPanel pan = this;
+        //JPanel pan = this;
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                fixed=!fixed;
-                helper.fixed=fixed;
+                fixed = !fixed;
+                helper.fixed = fixed;
                 getParent().repaint();
-                ((parentPanel)getParent()).video.setLocation(helper.getX()+helper.getWidth(), getY());
-
-                //if (getComponents().length < 1) prepareArea(pan);
-                //getParent().setVisible(false);
-                //getParent().setVisible(true);
+                ((parentPanel) getParent()).video.setLocation(helper.getX() + helper.getWidth(), getY());
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-                //if (getComponents().length < 1) prepareArea(pan);
-                //getParent().setVisible(false);
-                //getParent().setVisible(true);
                 if (!fixed) {
                     helper.setData(data);
                     helper.setVisible(true);
-                    helper.setLocation(getX()+getWidth(), getY());
+                    helper.setLocation(getX() + getWidth(), getY());
                 }
-                //setSize(helper.area.getWidth(),helper.area.getHeight());
-                //getParent().repaint();
-                //getParent().setVisible(false);
-                //getParent().setVisible(true);
-
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-                if(!fixed) helper.setVisible(false);
-                //helper.setVisible(false);
-                //pan.removeAll();
-                //setSize(new Dimension(50, 50)); //нужен для пайнт
-            }
+                if (!fixed) helper.setVisible(false);
+           }
         });
 
         addMouseMotionListener(new MouseMotionAdapter() {
@@ -172,7 +138,7 @@ public class childPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image,0,0,this);
+        g.drawImage(image, 0, 0, this);
     }
 
 }

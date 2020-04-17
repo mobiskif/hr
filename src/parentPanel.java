@@ -52,9 +52,9 @@ public class parentPanel extends JPanel {
         model.queryAPI(text);
         removeAll();
         for (String[] row : model.adata) add(new childPanel(row, dimension, helper));
+        add(video);
         add(helper);
         setComponentZOrder(helper,1);
-        add(video);
 
         add(worker);
         setComponentZOrder(worker,0);
@@ -66,6 +66,7 @@ public class parentPanel extends JPanel {
         super.paintComponent(g);
         g.drawImage(image,0,0,this);
         g.drawRect(1, 1, getWidth() - 3, getHeight() - 3);
+        g.drawString(getWidth()+","+getHeight(), getWidth()-60, getHeight()-14);
     }
 
 }

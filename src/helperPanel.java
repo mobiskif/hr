@@ -40,7 +40,7 @@ public class helperPanel extends JPanel {
         setVisible(false);
         loadImages();
 
-        area.setBounds(14, 10, getWidth() / 3, getHeight() - 14);
+        area.setBounds(14, 10, getWidth()/2, getHeight() - 14);
         area.setOpaque(false);
 
         add(area);
@@ -52,29 +52,11 @@ public class helperPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 ((parentPanel) getParent()).video.offCam();
-                /*
-                fixed=!fixed;
-                System.out.println(fixed);
-                if (fixed) {
-                    //area.setBorder(BorderFactory.createEtchedBorder());
-                    area.setOpaque(false);
-                    area.setForeground(Color.WHITE);
-                    //((parentPanel)getParent()).video.showCam();
-                }
-                else {
-                    ((parentPanel)getParent()).video.offCam();
-                    //area.setBorder(BorderFactory.createEmptyBorder());
-                    area.setOpaque(true);
-                    area.setForeground(Color.BLACK);
-                }
-
-                 */
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
-                //if(!fixed) setVisible(false);
             }
         });
 
