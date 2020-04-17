@@ -10,10 +10,12 @@ import java.io.Serializable;
 public class workerPanel extends JPanel implements Serializable {
     int x0, y0;
 
-    transient Image image;
+    transient Image image, ledImage;
     void loadImages() {
         try {
             image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/small3.png"));
+            ledImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/puzyr2.png"));
+            ledImage = ledImage.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,6 +91,9 @@ public class workerPanel extends JPanel implements Serializable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image,0,0,this);
+        g.drawImage(ledImage, getWidth() - 20, 5, this);
+        g.drawImage(ledImage, getWidth() - 20, 22, this);
+        g.drawImage(ledImage, getWidth() - 20, 39, this);
     }
 
 }

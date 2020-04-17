@@ -9,12 +9,15 @@ import java.io.IOException;
 
 public class helperPanel extends JPanel {
     JTextArea area = new JTextArea();
-    boolean fixed=false;
+    boolean fixed = false;
 
-    Image image;
+    Image image, ledImage;
+
     void loadImages() {
         try {
             image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/vd6.jpg"));
+            ledImage = ImageIO.read(getClass().getClassLoader().getResourceAsStream("res/puzyr2.png"));
+            ledImage = ledImage.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,24 +35,23 @@ public class helperPanel extends JPanel {
         super();
         //setLayout(new BorderLayout());
         setLayout(null);
-        setSize(180,120);
-        setLocation(300,300);
+        setSize(180, 120);
+        setLocation(300, 300);
         setVisible(false);
         loadImages();
 
-        area.setBounds(0,0,getWidth()/2,getHeight());
+        area.setBounds(14, 10, getWidth() / 3, getHeight() - 14);
         area.setOpaque(false);
+
         add(area);
 
         setTransferHandler(new workerTransferHandler(this));
-        //setTransferHandler(new workerTransferHandler(area));
-
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                ((parentPanel)getParent()).video.offCam();
+                ((parentPanel) getParent()).video.offCam();
                 /*
                 fixed=!fixed;
                 System.out.println(fixed);
@@ -68,6 +70,7 @@ public class helperPanel extends JPanel {
 
                  */
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 super.mouseExited(e);
@@ -79,19 +82,30 @@ public class helperPanel extends JPanel {
 
     public void setData(String[] data) {
         area.setText("");
-        for (int i = 0; i < data.length ; i++) area.append(data[i]+"\n");
+        for (int i = 0; i < data.length; i++) area.append(data[i] + "\n");
         getParent().repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (fixed) {
+        g.drawImage(image, 0, 0, this);
+        g.drawImage(ledImage, getWidth() - 20, 5, this);
+        area.setFont(new Font("Sans Serif", Font.PLAIN, 13));
+        area.setForeground(Color.BLACK);
+        if (!fixed) {
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.65f));
+            g2d.setColor(getBackground());
+            g2d.fillRect(0, 0, getWidth(), getHeight());
+            g2d.dispose();
+        } else {
             area.setForeground(Color.WHITE);
-            //g.drawRect(0,0,getWidth()-1,getHeight()-1);
-            g.drawImage(image,0,0,this);
+            area.setFont(new Font("Sans Serif", Font.BOLD, 13));
+            g.drawImage(ledImage, getWidth() - 20, 5, this);
+            g.drawImage(ledImage, getWidth() - 20, 22, this);
+            g.drawImage(ledImage, getWidth() - 20, 39, this);
         }
-        else area.setForeground(Color.BLACK);
 
 
     }

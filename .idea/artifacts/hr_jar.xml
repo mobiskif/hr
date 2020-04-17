@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="hr:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/hr_jar</output-path>
+    <root id="archive" name="hr.jar">
+      <element id="module-output" name="hr" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/res/bridj-0.7.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/res/slf4j-api-1.7.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/res/webcam-capture-0.3.12.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/res/javax.json-1.0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/res/javax.json-api-1.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

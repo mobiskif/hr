@@ -60,9 +60,12 @@ public class workerTransferHandler extends TransferHandler implements Serializab
             Container parent = source.getParent();
             parent.remove(source);
             parent.repaint();
-            ((parentPanel) parent).video.showCam();
+            if (parent.getClass().getSimpleName().contains("parentPanel")) ((parentPanel) parent).video.showCam();
+            if (parent.getClass().getSimpleName().contains("helperPanel")) {
+                ((parentPanel) ((helperPanel) parent).getParent()).video.offCam();
+                ((helperPanel) parent).fixed=false;
+            }
         }
-        //((parentPanel) source.getParent()).video.showCam();
     }
 
     @Override
@@ -74,7 +77,6 @@ public class workerTransferHandler extends TransferHandler implements Serializab
             //migrant = (workerPanel) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
             migrant.setLocation(point);
             reciver.add(migrant);
-
             reciver.repaint();
             return true;
         } catch (Exception e) {
