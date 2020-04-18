@@ -2,15 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.HashMap;
 
 public class workerTransferHandler extends TransferHandler implements Serializable {
-    JComponent reciver;
+    final JComponent reciver;
 
     public workerTransferHandler(JComponent panel) {
         super();
@@ -24,7 +22,7 @@ public class workerTransferHandler extends TransferHandler implements Serializab
 
     @Override
     protected Transferable createTransferable(JComponent c) {
-        Transferable t = new Transferable() {
+        return new Transferable() {
             @Override
             public DataFlavor[] getTransferDataFlavors() {
                 return new DataFlavor[0];
@@ -36,9 +34,9 @@ public class workerTransferHandler extends TransferHandler implements Serializab
             }
 
             @Override
-            public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+            public Object getTransferData(DataFlavor flavor) {
                 try {
-                    FileOutputStream fos = null;
+                    FileOutputStream fos;
                     fos = new FileOutputStream("temp.out");
                     ObjectOutputStream oos = new ObjectOutputStream(fos);
                     oos.writeObject(reciver);
@@ -50,7 +48,6 @@ public class workerTransferHandler extends TransferHandler implements Serializab
                 return reciver;
             }
         };
-        return t;
     }
 
     @Override
@@ -60,9 +57,9 @@ public class workerTransferHandler extends TransferHandler implements Serializab
             Container parent = source.getParent();
             parent.remove(source);
             parent.repaint();
-            if (parent.getClass().getSimpleName().contains("parentPanel")) ((parentPanel) parent).video.showCam();
+            if (parent.getClass().getSimpleName().contains("mapPanel")) ((mapPanel) parent).video.showCam();
             if (parent.getClass().getSimpleName().contains("helperPanel")) {
-                ((parentPanel) ((helperPanel) parent).getParent()).video.offCam();
+                ((mapPanel) parent.getParent()).video.offCam();
                 ((helperPanel) parent).fixed=false;
             }
         }
@@ -73,8 +70,10 @@ public class workerTransferHandler extends TransferHandler implements Serializab
         Point point;
         try {
             point = support.getDropLocation().getDropPoint();
-            workerPanel migrant = new workerPanel();
-            //migrant = (workerPanel) support.getTransferable().getTransferData(DataFlavor.stringFlavor);
+            //Object transferedObj = support.getTransferable().getTransferData(DataFlavor.stringFlavor);
+            //System.out.println(point);
+            basePanel migrant = new basePanel("worker.png", point.x, point.y);
+            migrant.fixed=true;
             migrant.setLocation(point);
             reciver.add(migrant);
             reciver.repaint();

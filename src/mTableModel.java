@@ -8,10 +8,10 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class mTableModel extends AbstractTableModel {
-    ArrayList<String[]> adata = new ArrayList<String[]>();
+    final ArrayList<String[]> adata = new ArrayList<>();
     String[] headers = {"id","name", "lat", "lng", "from", "to", "employer"};
-    Dimension dimension;
-    String[][] data = {
+    final Dimension dimension;
+    final String[][] data = {
             {"123", "Рабочий", "59.91", "30.32", "50000", "60000", "Газпром"},
             {"345", "Дворник", "59.88", "30.33", "50000", "60000", "РЖД"},
     };

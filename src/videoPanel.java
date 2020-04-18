@@ -10,7 +10,7 @@ import java.awt.event.MouseMotionAdapter;
 
 public class videoPanel extends JPanel {
     int x0, y0;
-    JTextArea area = new JTextArea();
+    final JTextArea area = new JTextArea();
     Webcam webcam = null;
     WebcamPanel webcamPanel = null;
 
