@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class MainForm {
     private JPanel panel1;
@@ -8,8 +11,37 @@ public class MainForm {
     private JTextField textField1;
 
     public MainForm() {
-
-        button1.addActionListener(e -> parentPanel1.queryAPI(textField1.getText()));
+        //button1.addActionListener(e -> parentPanel1.queryAPI(textField1.getText()));
+        button1.addActionListener(e -> {
+            Runtime rt = Runtime.getRuntime();
+            try {
+                //rt.exec("rundll32 url.dll, FileProtocolHandler https://meet.google.com/asd-ert-dfgh");
+                rt.exec("explorer https://meet.google.com/asd-ert-dfgh ");
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            /*
+            ProcessBuilder builder = new ProcessBuilder(
+                    //"cmd.exe", "/c", "cd \"C:\\Program Files\\Microsoft SQL Server\" && dir");
+                    "rundll32 url.dll, FileProtocolHandler http://google.com");
+            builder.redirectErrorStream(true);
+            Process p = null;
+            try {
+                p = builder.start();
+                BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                String line;
+                while (true) {
+                    line = r.readLine();
+                    if (line == null) {
+                        break;
+                    }
+                    System.out.println(line);
+                }
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            */
+        });
         textField1.addActionListener(e -> parentPanel1.queryAPI(textField1.getText()));
     }
 
