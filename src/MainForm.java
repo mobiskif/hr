@@ -15,7 +15,6 @@ public class MainForm {
         button1.addActionListener(e -> {
             Runtime rt = Runtime.getRuntime();
             try {
-                //rt.exec("rundll32 url.dll, FileProtocolHandler https://meet.google.com/asd-ert-dfgh");
                 rt.exec("explorer https://meet.google.com/hga-tzxn-fgq");
             } catch (IOException ioException) {
                 ioException.printStackTrace();

@@ -57,7 +57,15 @@ public class workerTransferHandler extends TransferHandler implements Serializab
             Container parent = source.getParent();
             parent.remove(source);
             parent.repaint();
-            if (parent.getClass().getSimpleName().contains("mapPanel")) ((mapPanel) parent).video.showCam();
+            if (parent.getClass().getSimpleName().contains("mapPanel")) {
+                Runtime rt = Runtime.getRuntime();
+                try {
+                    rt.exec("explorer https://meet.google.com/hga-tzxn-fgq");
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                //((mapPanel) parent).video.showCam();
+            }
             if (parent.getClass().getSimpleName().contains("helperPanel")) {
                 ((mapPanel) parent.getParent()).video.offCam();
                 ((helperPanel) parent).fixed=false;
