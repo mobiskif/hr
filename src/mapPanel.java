@@ -36,5 +36,7 @@ public class mapPanel extends basePanel {
 
         add(helper);
         setComponentZOrder(helper,1);
+
+        repaint();
     }
 }
