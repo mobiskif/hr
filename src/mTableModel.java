@@ -36,7 +36,7 @@ public class mTableModel extends AbstractTableModel {
                 row[6]= result.getJsonObject("address").get("street").toString() + " " + result.getJsonObject("address").get("building").toString();
                 if (!result.getJsonObject("address").get("metro").toString().contains("null")) row[7]= result.getJsonObject("address").getJsonObject("metro").get("station_name").toString();
             } else {row[2]= ""; row[3]= "";}
-            if (!result.get("salary").toString().contains("null")) {
+            if (!result.get("salary").toString().startsWith("null")) {
                 row[4]= result.getJsonObject("salary").get("from").toString()+".."+result.getJsonObject("salary").get("to").toString();
             } else row[4]= "не указана";
             row[5]= result.getJsonObject("employer").get("name").toString();

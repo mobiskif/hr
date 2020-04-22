@@ -6,7 +6,7 @@ public class Main extends Applet {
 
     public Main() throws HeadlessException {
         super();
-        setLayout( new BorderLayout());
+        setLayout( new BorderLayout() );
         add(new MainForm().$$$getRootComponent$$$());
         setVisible(true);
     }

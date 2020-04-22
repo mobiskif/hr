@@ -83,4 +83,11 @@ public class childPanel extends basePanel {
            }
         });
     }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setFont(new Font("Sans Serif", Font.BOLD, 13));
+        g.drawString(data[4],6, getWidth()/2+4);
+    }
 }
