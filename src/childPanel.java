@@ -69,7 +69,8 @@ public class childPanel extends basePanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 super.mouseEntered(e);
-                if (fixed && !helper.fixed) {
+                if (fixed && !helper.fixed)
+                {
                     helper.setData(data);
                     helper.setVisible(true);
                     helper.setLocation(getX() + getWidth(), getY());
