@@ -15,9 +15,10 @@ public class MainForm {
         button1.addActionListener(e -> {
             Runtime rt = Runtime.getRuntime();
             try {
-                rt.exec("explorer https://meet.google.com/hga-tzxn-fgq");
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
+                //rt.exec("explorer https://meet.google.com/hga-tzxn-fgq");
+                parentPanel1.queryAPI(textField1.getText());
+            } catch (Exception ee) {
+                ee.printStackTrace();
             }
             /*
             ProcessBuilder builder = new ProcessBuilder(
